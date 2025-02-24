@@ -5,11 +5,12 @@ using UnityEngine;
 public class MouseClick : MonoBehaviour
 {
     public Camera mainCamera;
+    public AudioClip coinInDispenserSFX;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        Cursor.visible = true;
     }
 
     // Update is called once per frame
@@ -25,10 +26,16 @@ public class MouseClick : MonoBehaviour
 
             bool hit = Physics.Raycast(ray, out raycastHit);
 
-            if (hit) //TODO: make only for ICollectible so no errors pop up
+            Debug.Log(raycastHit.transform.name);
+            if (hit && raycastHit.transform.gameObject.tag == "Collectible") 
             {
-                Debug.Log(raycastHit.transform.name);
                 raycastHit.transform.gameObject.GetComponentInChildren<ICollectible>().Collect();
+            }
+            else if (hit && raycastHit.transform.gameObject.tag == "GumballMachine")
+            {
+                AudioSource.PlayClipAtPoint(coinInDispenserSFX, Camera.main.transform.position);
+                GumballPuzzle gumballPuzzle = raycastHit.transform.gameObject.GetComponent<GumballPuzzle>();
+                gumballPuzzle.CompleteGumballPuzzle();
             }
             else
             {

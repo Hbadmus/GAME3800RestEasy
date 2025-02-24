@@ -37,8 +37,7 @@ public class InventoryManager : MonoBehaviour
             CreateInventorySlot();
         }
 
-        Debug.Log(inventorySlots.Count);
-        for (int i = 0; i < inventorySlots.Count; i++)
+        for (int i = 0; i < inventory.Count; i++)
         {
             inventorySlots[i].DrawSlot(inventory[i]); // TODO: lol fix error, make only 1 instead of all
         }

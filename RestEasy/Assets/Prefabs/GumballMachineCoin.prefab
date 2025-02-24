@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 689464300545409385}
   m_Layer: 0
   m_Name: GumballMachineCoin
-  m_TagString: Untagged
+  m_TagString: Collectible
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -46,6 +46,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 507221f711a1846d08132adbb282bea6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  coinData: {fileID: 11400000, guid: a0006dc3d75b24613888d74f7c6058cb, type: 2}
+  collectCoinSFX: {fileID: 8300000, guid: 22de33ef59f8543708292b55a4b6e9df, type: 3}
 --- !u!65 &689464300545409385
 BoxCollider:
   m_ObjectHideFlags: 0

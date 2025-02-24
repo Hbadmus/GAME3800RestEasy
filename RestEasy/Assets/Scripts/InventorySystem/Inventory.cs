@@ -7,8 +7,14 @@ public class Inventory : MonoBehaviour
 {
     public static event Action<List<InventoryItem>> OnInventoryChange;
 
-    public List<InventoryItem> inventory = new List<InventoryItem>(); // TODO: make sure can only fit set number?
-    private Dictionary<ItemData, InventoryItem> itemDictionary = new Dictionary<ItemData, InventoryItem>();
+    public List<InventoryItem> inventory; // TODO: make sure can only fit set number?
+    public Dictionary<ItemData, InventoryItem> itemDictionary;
+
+    void Start()
+    {
+        inventory = new List<InventoryItem>();
+        itemDictionary = new Dictionary<ItemData, InventoryItem>();
+    }
 
     private void OnEnable()
     {
