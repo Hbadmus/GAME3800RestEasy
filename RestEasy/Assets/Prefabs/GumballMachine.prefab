@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3450307440228157655}
   - component: {fileID: 6696011948320980347}
+  - component: {fileID: 5761665844214588125}
   m_Layer: 0
   m_Name: GumballMachine
   m_TagString: GumballMachine
@@ -45,8 +46,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e05b293dd16140228a48e4cc70fbbbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inventory: {fileID: 0}
   coinData: {fileID: 11400000, guid: a0006dc3d75b24613888d74f7c6058cb, type: 2}
   coinCount: 4
+  machineRumblingSFX: {fileID: 8300000, guid: a345938eaa285446a8eb5f87393f40ba, type: 3}
+  successSFX: {fileID: 8300000, guid: 4d761c37a1d09411eb05cf0fe372a299, type: 3}
+--- !u!136 &5761665844214588125
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3894121511229064724}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 4.610464
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.50337577, z: 0}
 --- !u!1001 &2192921025294095855
 PrefabInstance:
   m_ObjectHideFlags: 0

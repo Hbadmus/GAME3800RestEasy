@@ -8,7 +8,7 @@ public class GumballPuzzle : MonoBehaviour
     public ItemData coinData;
     public int coinCount = 4;
 
-    public AudioClip coinDispensingSFX;
+    public AudioClip machineRumblingSFX;
     public AudioClip successSFX;
 
     private static int coinsCollectedSoFar = 0;
@@ -29,7 +29,7 @@ public class GumballPuzzle : MonoBehaviour
             {
                 finishedPuzzle = true;
                 Debug.Log("Congrats!");
-                AudioSource.PlayClipAtPoint(coinDispensingSFX, Camera.main.transform.position);
+                AudioSource.PlayClipAtPoint(machineRumblingSFX, Camera.main.transform.position);
                 AudioSource.PlayClipAtPoint(successSFX, Camera.main.transform.position);
             }
         }
