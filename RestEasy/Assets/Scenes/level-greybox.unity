@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -7086,6 +7086,32 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &196149475 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8205126834481759592, guid: d04e20bccca744ceba4786aa3912052b, type: 3}
+  m_PrefabInstance: {fileID: 2248334591651640473}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &196149479
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 196149475}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.00042723204, y: 0.0014619504, z: 0.0023090823}
+  m_Center: {x: -0.000000012369129, y: 0.0001823179, z: -0.0000000031284726}
 --- !u!1 &197023236
 GameObject:
   m_ObjectHideFlags: 0
@@ -11597,9 +11623,10 @@ GameObject:
   - component: {fileID: 345178206}
   - component: {fileID: 345178208}
   - component: {fileID: 345178207}
+  - component: {fileID: 345178209}
   m_Layer: 0
   m_Name: Puzzle book 1 (1)
-  m_TagString: Untagged
+  m_TagString: Book
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11670,6 +11697,27 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 345178205}
   m_Mesh: {fileID: -2439448049684986924, guid: 5f7a514cc10424fa4bc40e7028a3e8b8, type: 3}
+--- !u!65 &345178209
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 345178205}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.00068895414, y: 0.0014630154, z: 0.0024464608}
+  m_Center: {x: 0.000000013020552, y: 0.00018178187, z: -0.000000008130306}
 --- !u!43 &351127822
 Mesh:
   m_ObjectHideFlags: 0
@@ -20853,6 +20901,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8233d90336aea43098adf6dbabd606a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &610252390 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4028639173740449666, guid: d04e20bccca744ceba4786aa3912052b, type: 3}
+  m_PrefabInstance: {fileID: 2248334591651640473}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &610252394
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 610252390}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.0007348304, y: 0.0014631075, z: 0.0015699512}
+  m_Center: {x: -0.0000000031286613, y: 0.00018174307, z: -0.0000000019059734}
 --- !u!43 &610255539
 Mesh:
   m_ObjectHideFlags: 0
@@ -40676,7 +40750,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1234626051
 Transform:
   m_ObjectHideFlags: 0
@@ -44443,8 +44517,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1341953045}
+  - component: {fileID: 1341953046}
   m_Layer: 0
-  m_Name: BookManager
+  m_Name: BookshelfManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44465,6 +44540,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1341953046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1341953043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c797e404a5b14132ba160bf1ecd0470, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetBooksToCollect: 5
+  booksCollected: 0
 --- !u!1 &1344384553
 GameObject:
   m_ObjectHideFlags: 0
@@ -47086,6 +47175,32 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &1406655252 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2309973951704491129, guid: d04e20bccca744ceba4786aa3912052b, type: 3}
+  m_PrefabInstance: {fileID: 2248334591651640473}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &1406655256
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1406655252}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.00026336685, y: 0.0014415616, z: 0.0013565499}
+  m_Center: {x: 0.0000000025320326, y: 0.00019250829, z: -0.000000003771187}
 --- !u!43 &1412194085
 Mesh:
   m_ObjectHideFlags: 0
@@ -68091,6 +68206,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8233d90336aea43098adf6dbabd606a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &2015278388 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1084394075978091218, guid: d04e20bccca744ceba4786aa3912052b, type: 3}
+  m_PrefabInstance: {fileID: 2248334591651640473}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &2015278392
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2015278388}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.0006889538, y: 0.0014630153, z: 0.0024464605}
+  m_Center: {x: 0.000000009313226, y: 0.00018177442, z: -6.836237e-10}
 --- !u!43 &2016140399
 Mesh:
   m_ObjectHideFlags: 0
@@ -73125,6 +73266,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 172980610}
     m_Modifications:
+    - target: {fileID: 1084394075978091218, guid: d04e20bccca744ceba4786aa3912052b, type: 3}
+      propertyPath: m_TagString
+      value: Book
+      objectReference: {fileID: 0}
+    - target: {fileID: 2309973951704491129, guid: d04e20bccca744ceba4786aa3912052b, type: 3}
+      propertyPath: m_TagString
+      value: Book
+      objectReference: {fileID: 0}
+    - target: {fileID: 4028639173740449666, guid: d04e20bccca744ceba4786aa3912052b, type: 3}
+      propertyPath: m_TagString
+      value: Book
+      objectReference: {fileID: 0}
     - target: {fileID: 4707536678440515352, guid: d04e20bccca744ceba4786aa3912052b, type: 3}
       propertyPath: m_Name
       value: Bookshelf
@@ -73169,6 +73322,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8205126834481759592, guid: d04e20bccca744ceba4786aa3912052b, type: 3}
+      propertyPath: m_TagString
+      value: Book
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -73178,7 +73335,19 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 676511932453999153, guid: d04e20bccca744ceba4786aa3912052b, type: 3}
       insertIndex: 497
       addedObject: {fileID: 345178206}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1084394075978091218, guid: d04e20bccca744ceba4786aa3912052b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2015278392}
+    - targetCorrespondingSourceObject: {fileID: 2309973951704491129, guid: d04e20bccca744ceba4786aa3912052b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1406655256}
+    - targetCorrespondingSourceObject: {fileID: 4028639173740449666, guid: d04e20bccca744ceba4786aa3912052b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 610252394}
+    - targetCorrespondingSourceObject: {fileID: 8205126834481759592, guid: d04e20bccca744ceba4786aa3912052b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 196149479}
   m_SourcePrefab: {fileID: 100100000, guid: d04e20bccca744ceba4786aa3912052b, type: 3}
 --- !u!1001 &5504476166138248941
 PrefabInstance:

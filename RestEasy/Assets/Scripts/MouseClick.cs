@@ -37,6 +37,12 @@ public class MouseClick : MonoBehaviour
                 GumballPuzzle gumballPuzzle = raycastHit.transform.gameObject.GetComponent<GumballPuzzle>();
                 gumballPuzzle.CompleteGumballPuzzle();
             }
+            else if (hit && raycastHit.transform.gameObject.tag == "Book")
+            {
+                Debug.Log("hit book");
+                BookshelfPuzzle bookshelfPuzzle = GameObject.Find("BookshelfManager").GetComponent<BookshelfPuzzle>();
+                bookshelfPuzzle.IncrementBooksCollected();
+            }
             else
             {
                 Debug.Log("Did not hit anything :(");
