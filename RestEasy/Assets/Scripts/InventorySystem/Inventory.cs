@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using System;
 
 public class Inventory : MonoBehaviour
@@ -9,6 +10,7 @@ public class Inventory : MonoBehaviour
 
     public List<InventoryItem> inventory; // TODO: make sure can only fit set number?
     public Dictionary<ItemData, InventoryItem> itemDictionary;
+    public GameObject briefcase;
 
     void Start()
     {
@@ -41,8 +43,10 @@ public class Inventory : MonoBehaviour
             itemDictionary.Add(itemData, newItem);
             Debug.Log($"Added {itemData.displayName} to the inventory for the first time.");
             OnInventoryChange?.Invoke(inventory);
-
         }
+
+        BriefcaseTest bt = briefcase.GetComponent<BriefcaseTest>();
+        bt.Add();
     }
 
     public void Remove(ItemData itemData)

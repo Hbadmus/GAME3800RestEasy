@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BookshelfPuzzle : MonoBehaviour
 {
-    public int targetBooksToCollect =  5;
+    public int targetBooksToCollect =  4;
     public int booksCollected = 0;
     public GameObject secretCompartment;
     public GameObject puzzleKey;
@@ -20,7 +20,8 @@ public class BookshelfPuzzle : MonoBehaviour
         }
         else if (isPuzzleCompleted) {
             Rigidbody keyRB = puzzleKey.GetComponent<Rigidbody>();
-            if (puzzleKey.transform.position.y > ground.transform.position.y) {
+            Debug.Log(puzzleKey.transform.position.y + " " + (ground.transform.position.y + 10));
+            if (puzzleKey.transform.position.y < -15) {
                 keyRB.isKinematic = false;
             }
             else {
