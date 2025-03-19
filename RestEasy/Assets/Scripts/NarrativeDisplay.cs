@@ -6,6 +6,9 @@ using TMPro;
 
 public class NarrativeDisplay : MonoBehaviour
 {
+
+    public GameObject canvas;
+
     [Header("UI References")]
     [SerializeField] private Image blackScreen;
     [SerializeField] private TextMeshProUGUI narrativeText;
@@ -17,6 +20,8 @@ public class NarrativeDisplay : MonoBehaviour
 
     [Header("Narrative Elements")]
     [SerializeField] private string[] narrativeElements;
+
+    
 
     private int currentElementIndex = 0;
     private bool isDisplaying = false;
@@ -33,6 +38,9 @@ public class NarrativeDisplay : MonoBehaviour
         textCanvasGroup.alpha = 0;
         narrativeText.text = "";
 
+        // make cursor invisible 
+        canvas.SetActive(false);
+
         // Start the narrative sequence
         StartCoroutine(BeginNarrative());
     }
@@ -48,6 +56,16 @@ public class NarrativeDisplay : MonoBehaviour
 
     private void Update()
     {
+        //THIS IS THE SKIP FUNCTION I (chris) ADDED
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Debug.Log("I am supposed to be skipping");
+            // make cursor not invisible 
+            canvas.SetActive(true);
+            EndNarrative();
+            return;
+        }
+        
         if (useClickProgression && Input.GetMouseButtonDown(0))
         {
             if (!isDisplaying)
@@ -61,6 +79,8 @@ public class NarrativeDisplay : MonoBehaviour
     {
         if (currentElementIndex >= narrativeElements.Length)
         {
+            // make cursor not invisible 
+            canvas.SetActive(true);
             EndNarrative();
             return;
         }
