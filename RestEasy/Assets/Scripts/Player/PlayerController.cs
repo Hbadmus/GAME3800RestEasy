@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
     {
         HandleMovement();
         HandleMouseLook();
+
     }
 
     void HandleMovement()
