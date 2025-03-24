@@ -26,7 +26,7 @@ public class MouseClick : MonoBehaviour
 
             bool hit = Physics.Raycast(ray, out raycastHit);
 
-            Debug.Log(raycastHit.transform.name);
+            //Debug.Log(raycastHit.transform.name);
             if (hit && raycastHit.transform.gameObject.tag == "Collectible") 
             {
                 raycastHit.transform.gameObject.GetComponentInChildren<ICollectible>().Collect();
@@ -39,7 +39,7 @@ public class MouseClick : MonoBehaviour
             }
             else
             {
-                Debug.Log("Did not hit anything :(");
+                //Debug.Log("Did not hit anything :(");
             }
         }
     }

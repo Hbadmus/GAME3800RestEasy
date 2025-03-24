@@ -26,19 +26,6 @@ public class PlayerController : MonoBehaviour
         HandleMovement();
         HandleMouseLook();
 
-        if (Input.GetMouseButtonDown(0))
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity))
-            {
-                if (hit.collider.CompareTag("Collectible"))
-                {
-                    Debug.Log("item hit " + hit.collider.gameObject);
-                }
-            }
-        }
     }
 
     void HandleMovement()
