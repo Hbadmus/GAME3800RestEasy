@@ -16,6 +16,9 @@ public class piano_script : MonoBehaviour
     [SerializeField]
     private GameObject key4;
 
+    [SerializeField]
+    private AudioClip[] keyPressedSFX;
+
     bool canKeyBePressed = true;
     private int currentKeyIndex = 0;  
 
@@ -52,6 +55,20 @@ public class piano_script : MonoBehaviour
 
     void piano_key_pressed(GameObject key)
     {
+        Debug.Log(key.name);
+        if (key.name == "Cube.021") {
+            AudioSource.PlayClipAtPoint(keyPressedSFX[0], Camera.main.transform.position);
+        }
+        else if (key.name == "Cube.026") {
+            AudioSource.PlayClipAtPoint(keyPressedSFX[1], Camera.main.transform.position);
+        }
+        else if (key.name == "Cube.027") {
+            AudioSource.PlayClipAtPoint(keyPressedSFX[2], Camera.main.transform.position);
+        }
+        else if (key.name == "Cube.028") {
+            AudioSource.PlayClipAtPoint(keyPressedSFX[3], Camera.main.transform.position);
+        }
+
         if (canKeyBePressed && key == keySequence[currentKeyIndex])
         {
             canKeyBePressed = false;
