@@ -6,7 +6,9 @@ TagManager:
   tags:
   - Collectible
   - GumballMachine
+  - Book
   - pianokey
+  
   layers:
   - Default
   - TransparentFX
