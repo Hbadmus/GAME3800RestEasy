@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -28470,7 +28470,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2254266904485484705, guid: 4e29faa1de20e420a90c0785f650e3c2, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2263998306296243579, guid: 4e29faa1de20e420a90c0785f650e3c2, type: 3}
       propertyPath: m_Layer
@@ -28623,29 +28623,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 2254266904485484705, guid: 4e29faa1de20e420a90c0785f650e3c2, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 826635764}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4e29faa1de20e420a90c0785f650e3c2, type: 3}
---- !u!1 &826635763 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2254266904485484705, guid: 4e29faa1de20e420a90c0785f650e3c2, type: 3}
-  m_PrefabInstance: {fileID: 826635762}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &826635764
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 826635763}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cecf3add08d39440f98c19141694e5fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  testItem: {fileID: 5856059807056369468, guid: 582b41dfd880546f6add08f619c37f57, type: 3}
 --- !u!43 &838599850
 Mesh:
   m_ObjectHideFlags: 0
@@ -42380,7 +42359,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1234626051
 Transform:
   m_ObjectHideFlags: 0
@@ -53753,7 +53732,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1552982235
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53829,9 +53808,9 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 2143024162}
   - {fileID: 1699472582}
   - {fileID: 1589808973}
-  - {fileID: 2143024162}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -58921,7 +58900,6 @@ GameObject:
   - component: {fileID: 1699472581}
   - component: {fileID: 1699472580}
   - component: {fileID: 1699472579}
-  - component: {fileID: 1699472578}
   m_Layer: 5
   m_Name: BriefcaseImage
   m_TagString: Untagged
@@ -58929,18 +58907,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
---- !u!114 &1699472578
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1699472577}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33c123d186531444186e26945d657fac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1699472579
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58999,7 +58965,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 1
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1552982238}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -71736,6 +71702,10 @@ PrefabInstance:
     - target: {fileID: 531692313642012412, guid: 95deb4bc493ef7d4f85a93bdabf5a7ba, type: 3}
       propertyPath: m_Center.y
       value: 0.94
+      objectReference: {fileID: 0}
+    - target: {fileID: 1178800941530585811, guid: 95deb4bc493ef7d4f85a93bdabf5a7ba, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4154656725335358442, guid: 95deb4bc493ef7d4f85a93bdabf5a7ba, type: 3}
       propertyPath: m_LocalPosition.y
