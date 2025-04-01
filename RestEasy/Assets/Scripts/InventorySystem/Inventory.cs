@@ -44,9 +44,6 @@ public class Inventory : MonoBehaviour
             Debug.Log($"Added {itemData.displayName} to the inventory for the first time.");
             OnInventoryChange?.Invoke(inventory);
         }
-
-        BriefcaseTest bt = briefcase.GetComponent<BriefcaseTest>();
-        bt.Add();
     }
 
     public void Remove(ItemData itemData)

@@ -30,7 +30,11 @@ public class BookshelfPuzzle : MonoBehaviour
         }
     }
     
-    public void IncrementBooksCollected() {
-        booksCollected++;
+    public void IncrementBooksCollected(GameObject hitObj) {
+        Book bookScript = hitObj.GetComponent<Book>();
+        if (bookScript != null && !bookScript.isClicked) {
+            bookScript.isClicked = true;
+            booksCollected++;
+        }
     }
 }
