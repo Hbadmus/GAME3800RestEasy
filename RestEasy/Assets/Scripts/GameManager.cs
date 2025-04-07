@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour
     {
         isTransitioning = true;
 
-        // Disable player input here if needed
+        // Disable player input here
         // PlayerController.instance.DisableInput();
 
         // Gradually increase vignette intensity to create blackout effect
@@ -143,6 +143,5 @@ public class GameManager : MonoBehaviour
 
         isTransitioning = false;
 
-        // Perform any additional actions needed after the sequence
     }
 }

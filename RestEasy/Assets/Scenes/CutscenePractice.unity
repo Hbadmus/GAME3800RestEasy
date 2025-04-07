@@ -612,6 +612,7 @@ GameObject:
   m_Component:
   - component: {fileID: 811475171}
   - component: {fileID: 811475170}
+  - component: {fileID: 811475172}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -653,6 +654,40 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &811475172
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 811475169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20482ce98d126124885abbdcad6bec5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ghostAudioSource: {fileID: 0}
+  gameManager: {fileID: 0}
+  currentState: 0
+  stateChangeTimer: 0
+  stateChangeInterval: 10
+  activityRadius: 8
+  smallObjectPushForce: 5
+  largeObjectPushForce: 10
+  maxMovableObjectMass: 20
+  flickeringLightIntensity: 0.3
+  windIntensity: 1
+  disturbanceDecayRate: 0.05
+  suspiciousSounds: []
+  defensiveSounds: []
+  revelatoryDialogue: []
+  acceptingSounds: []
+  objectMovementSounds: []
+  windSound: {fileID: 0}
+  heartbeatSound: {fileID: 0}
+  highEmotionalTags: []
+  mediumEmotionalTags: []
+  lowEmotionalTags: []
 --- !u!95 &826821489 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 2141596479286484295, guid: 76a565d511c0ee344af6274ba258130a, type: 3}

@@ -14,21 +14,50 @@ public class PlayerController : MonoBehaviour
     private Vector3 moveDirection = Vector3.zero;
     private float verticalRotation = 0f;
 
+    private bool isPossessed = false;
+    private float normalSpeed;
+    private float normalSensitivity;
+
     void Start()
     {
         controller = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
         Cursor.lockState = CursorLockMode.Locked;
+
+        normalSpeed = speed;
+        normalSensitivity = mouseSensitivity;
     }
 
     void Update()
     {
-        HandleMovement();
-        HandleMouseLook();
+        if (!isPossessed)
+        {
+            HandleMovement();
+            HandleMouseLook();
+        }
 
     }
 
-    void HandleMovement()
+    public void BecomePossessed()
+    {
+        isPossessed = true;
+
+        // Disable movement control
+        speed = 0f;
+        mouseSensitivity = 0f;
+
+    }
+
+    public void EndPossession()
+    {
+        isPossessed = false;
+
+        // Restore movement control
+        speed = normalSpeed;
+        mouseSensitivity = normalSensitivity;
+    }
+
+        void HandleMovement()
     {
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
