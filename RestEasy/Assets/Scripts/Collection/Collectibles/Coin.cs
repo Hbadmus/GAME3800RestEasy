@@ -12,7 +12,9 @@ public class Coin : MonoBehaviour, ICollectible
 
     public void Collect()
     {
-        AudioSource.PlayClipAtPoint(collectCoinSFX, Camera.main.transform.position);
+        AudioManager.instance.PlaySFX("collecting-coin");
+        //AudioSource.PlayClipAtPoint(collectCoinSFX, Camera.main.transform.position);
+
         Debug.Log("Coin collected");
         Destroy(gameObject);
         OnCoinCollected?.Invoke(coinData); // in other scripts, can subscribe and unsubscribe to invoke different methods

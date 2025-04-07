@@ -17,7 +17,7 @@ public class piano_script : MonoBehaviour
     private GameObject key4;
 
     [SerializeField]
-    private AudioClip[] keyPressedSFX;
+    private AudioClip[] keyPressedSFX; // NOTE: Unused now that there's AudioManager but will keep for now
 
     bool canKeyBePressed = true;
     private int currentKeyIndex = 0;  
@@ -57,16 +57,20 @@ public class piano_script : MonoBehaviour
     {
         Debug.Log(key.name);
         if (key.name == "Cube.021") {
-            AudioSource.PlayClipAtPoint(keyPressedSFX[0], Camera.main.transform.position);
+            AudioManager.instance.PlaySFX("c6");
+            //AudioSource.PlayClipAtPoint(keyPressedSFX[0], Camera.main.transform.position);
         }
         else if (key.name == "Cube.026") {
-            AudioSource.PlayClipAtPoint(keyPressedSFX[1], Camera.main.transform.position);
+            AudioManager.instance.PlaySFX("e6");
+            //AudioSource.PlayClipAtPoint(keyPressedSFX[1], Camera.main.transform.position);
         }
         else if (key.name == "Cube.027") {
-            AudioSource.PlayClipAtPoint(keyPressedSFX[2], Camera.main.transform.position);
+            AudioManager.instance.PlaySFX("f6");
+            //AudioSource.PlayClipAtPoint(keyPressedSFX[2], Camera.main.transform.position);
         }
         else if (key.name == "Cube.028") {
-            AudioSource.PlayClipAtPoint(keyPressedSFX[3], Camera.main.transform.position);
+            AudioManager.instance.PlaySFX("g6");
+            //AudioSource.PlayClipAtPoint(keyPressedSFX[3], Camera.main.transform.position);
         }
 
         if (canKeyBePressed && key == keySequence[currentKeyIndex])
@@ -77,6 +81,10 @@ public class piano_script : MonoBehaviour
             if (currentKeyIndex == keySequence.Length - 1)
             {
                 Debug.Log("Puzzle completed!");
+                
+                // Play success sound
+                AudioManager.instance.PlaySFX("puzzle-success");
+
                 key1.GetComponent<Renderer>().material.color = Color.green;
                 key2.GetComponent<Renderer>().material.color = Color.green;
                 key3.GetComponent<Renderer>().material.color = Color.green;

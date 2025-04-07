@@ -29,8 +29,12 @@ public class GumballPuzzle : MonoBehaviour
             {
                 finishedPuzzle = true;
                 Debug.Log("Congrats!");
-                AudioSource.PlayClipAtPoint(machineRumblingSFX, Camera.main.transform.position);
-                AudioSource.PlayClipAtPoint(successSFX, Camera.main.transform.position);
+
+                AudioManager.instance.PlaySFX("gumball-machine-rumbling");
+                AudioManager.instance.PlaySFX("puzzle-success", AudioManager.instance.GetLengthOfSFXClip("gumball-machine-rumbling"));
+                
+                //AudioSource.PlayClipAtPoint(machineRumblingSFX, Camera.main.transform.position);
+                //AudioSource.PlayClipAtPoint(successSFX, Camera.main.transform.position);
             }
         }
     }
