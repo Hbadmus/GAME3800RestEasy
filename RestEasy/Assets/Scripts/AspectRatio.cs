@@ -9,8 +9,8 @@ public class AspectRatio : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
-    {
-        // Find height and width of Tutorial gameObject
+    {        
+        // Find height and width of gameObject to render
         RectTransform rt = (RectTransform)transform;
 
         float height = rt.sizeDelta.y;
@@ -19,15 +19,22 @@ public class AspectRatio : MonoBehaviour
         float hwRatio = height / width;
         float whRatio = width / height;
 
-        if (Screen.width < Screen.height) {
-            renderTexture.width = Screen.width;
-            renderTexture.height = (int)(renderTexture.width * hwRatio);
+        // R elease the current RenderTexture
+        renderTexture.Release();
+
+        if (Screen.width > Screen.height) {
+            SetRenderTexture((int)(Screen.height * whRatio), Screen.height);
         }
         else {
-            renderTexture.height = Screen.height;
-            renderTexture.width = (int)(renderTexture.height * whRatio);
+            SetRenderTexture(Screen.width, (int)(Screen.width * hwRatio));
         }
 
         GetComponent<RawImage>().SetNativeSize();
+    }
+
+    void SetRenderTexture(int width, int height) {
+        // Assign the new RenderTexture
+        renderTexture.height = height;
+        renderTexture.width = width;
     }
 }

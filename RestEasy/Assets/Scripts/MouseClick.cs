@@ -41,7 +41,7 @@ public class MouseClick : MonoBehaviour
             {
                 Debug.Log("hit book");
                 BookshelfPuzzle bookshelfPuzzle = GameObject.Find("BookshelfManager").GetComponent<BookshelfPuzzle>();
-                bookshelfPuzzle.IncrementBooksCollected();
+                bookshelfPuzzle.IncrementBooksCollected(raycastHit.transform.gameObject);
             }
             else
             {

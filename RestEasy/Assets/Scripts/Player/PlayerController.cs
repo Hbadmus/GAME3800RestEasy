@@ -22,10 +22,11 @@ public class PlayerController : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
-        Cursor.lockState = CursorLockMode.Locked;
 
-        normalSpeed = speed;
-        normalSensitivity = mouseSensitivity;
+        //Cursor.lockState = CursorLockMode.Locked;
+
+        //normalSpeed = speed;
+        //normalSensitivity = mouseSensitivity;
     }
 
     void Update()
@@ -86,7 +87,7 @@ public class PlayerController : MonoBehaviour
     }
 
     void HandleMouseLook()
-    {
+    {        
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
 
