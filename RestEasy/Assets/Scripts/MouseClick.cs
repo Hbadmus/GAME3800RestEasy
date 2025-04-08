@@ -33,7 +33,8 @@ public class MouseClick : MonoBehaviour
             }
             else if (hit && raycastHit.transform.gameObject.tag == "GumballMachine")
             {
-                AudioSource.PlayClipAtPoint(coinInDispenserSFX, Camera.main.transform.position);
+                AudioManager.instance.PlaySFX("coin-dispensing");
+                //AudioSource.PlayClipAtPoint(coinInDispenserSFX, Camera.main.transform.position);
                 GumballPuzzle gumballPuzzle = raycastHit.transform.gameObject.GetComponent<GumballPuzzle>();
                 gumballPuzzle.CompleteGumballPuzzle();
             }
