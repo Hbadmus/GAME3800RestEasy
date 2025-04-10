@@ -12,8 +12,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float maxVignetteIntensity = 1.0f;
 
     [Header("UI Blackout")]
-    [SerializeField] private Image blackoutImage; // Changed to Image instead of CanvasGroup
+    [SerializeField] private Image blackoutImage;
     [SerializeField] private float finalBlackoutAlpha = 1.0f;
+
+    [Header("Camera Settings")]
+    [SerializeField] private Camera gameplayCamera;
+    [SerializeField] private Camera cutsceneCamera;
 
     [Header("Cutscene Settings")]
     [SerializeField] private PlayableDirector[] cutsceneTimelines;
@@ -25,6 +29,15 @@ public class GameManager : MonoBehaviour
     private bool isTransitioning = false;
 
     private void Awake()
+    {
+        // Setup post-processing effects
+        SetupPostProcessing();
+
+        // Initialize cameras
+        SetupCameras();
+    }
+
+    private void SetupPostProcessing()
     {
         // Get the vignette effect from post-processing volume
         postProcessVolume.profile.TryGetSettings(out vignette);
@@ -60,10 +73,24 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void SetupCameras()
+    {
+        if (gameplayCamera != null && cutsceneCamera != null)
+        {
+            // Ensure gameplay camera is active and cutscene camera is inactive at start
+            gameplayCamera.gameObject.SetActive(true);
+            cutsceneCamera.gameObject.SetActive(false);
+        }
+        else
+        {
+            Debug.LogError("One or both cameras are not assigned!");
+        }
+    }
+
     private void Start()
     {
-        Invoke("OnPuzzleCompleted", 10f);  // First cutscene at 10 seconds
-        Invoke("OnPuzzleCompleted", 60f);  // Second cutscene at 60 seconds
+        //Invoke("OnPuzzleCompleted", 10f);  // First cutscene at 10 seconds
+        //Invoke("OnPuzzleCompleted", 60f);  // Second cutscene at 60 seconds
     }
 
     // Call this method when a puzzle is completed (key is grabbed)
@@ -82,7 +109,26 @@ public class GameManager : MonoBehaviour
         // Disable player input here
         // PlayerController.instance.DisableInput();
 
-        // Activate blackout image if needed
+        // Step 1: Fade to black with gameplay camera still active
+        yield return StartCoroutine(FadeToBlack(true));
+
+        // Step 2: Switch cameras while completely black
+        gameplayCamera.gameObject.SetActive(false);
+        cutsceneCamera.gameObject.SetActive(true);
+
+        // Step 3: Start the cutscene BEFORE fading in
+        StartPlayingCutscene();
+
+        // Step 4: Wait a short moment for the cutscene to initialize
+        yield return new WaitForSeconds(0.3f);
+
+        // Step 5: Fade in from black with cutscene camera
+        yield return StartCoroutine(FadeFromBlack());
+    }
+
+    private IEnumerator FadeToBlack(bool enableBlur = true)
+    {
+        // Activate blackout image
         if (blackoutImage != null)
         {
             Color color = blackoutImage.color;
@@ -103,8 +149,8 @@ public class GameManager : MonoBehaviour
                 vignette.intensity.value = Mathf.Lerp(0f, maxVignetteIntensity, normalizedTime);
             }
 
-            // Update depth of field
-            if (depthOfField != null)
+            // Update depth of field if enabled
+            if (depthOfField != null && enableBlur)
             {
                 depthOfField.active = true;
                 depthOfField.focusDistance.value = Mathf.Lerp(10f, 0.1f, normalizedTime);
@@ -129,7 +175,7 @@ public class GameManager : MonoBehaviour
             vignette.intensity.value = maxVignetteIntensity;
         }
 
-        if (depthOfField != null)
+        if (depthOfField != null && enableBlur)
         {
             depthOfField.focusDistance.value = 0.1f;
             depthOfField.aperture.value = 32f;
@@ -141,15 +187,62 @@ public class GameManager : MonoBehaviour
             color.a = finalBlackoutAlpha;
             blackoutImage.color = color;
         }
-
-        // Wait a short moment before starting cutscene
-        yield return new WaitForSeconds(delayBeforeCutscene);
-
-        // Play the appropriate cutscene
-        PlayCutscene();
     }
 
-    private void PlayCutscene()
+    private IEnumerator FadeFromBlack()
+    {
+        // Gradually decrease blackout intensity
+        float elapsedTime = 0f;
+        while (elapsedTime < transitionDuration)
+        {
+            float normalizedTime = elapsedTime / transitionDuration;
+
+            // Update vignette
+            if (vignette != null)
+            {
+                vignette.intensity.value = Mathf.Lerp(maxVignetteIntensity, 0f, normalizedTime);
+            }
+
+            // Update depth of field
+            if (depthOfField != null)
+            {
+                depthOfField.focusDistance.value = Mathf.Lerp(0.1f, 10f, normalizedTime);
+                depthOfField.aperture.value = Mathf.Lerp(32f, 0.1f, normalizedTime);
+            }
+
+            // Update blackout image
+            if (blackoutImage != null)
+            {
+                Color color = blackoutImage.color;
+                color.a = Mathf.Lerp(finalBlackoutAlpha, 0f, normalizedTime);
+                blackoutImage.color = color;
+            }
+
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        // Ensure everything is reset
+        if (vignette != null)
+        {
+            vignette.intensity.value = 0f;
+        }
+
+        if (depthOfField != null)
+        {
+            depthOfField.active = false;
+        }
+
+        if (blackoutImage != null)
+        {
+            Color color = blackoutImage.color;
+            color.a = 0f;
+            blackoutImage.color = color;
+            blackoutImage.gameObject.SetActive(false);
+        }
+    }
+
+    private void StartPlayingCutscene()
     {
         if (cutsceneTimelines == null || cutsceneTimelines.Length == 0)
         {
@@ -191,62 +284,26 @@ public class GameManager : MonoBehaviour
         // Increment cutscene index for next time
         currentCutsceneIndex++;
 
-        // Start fading the vignette back out
-        StartCoroutine(FadeOutVignette());
+        // Start transition back to gameplay
+        StartCoroutine(TransitionToGameplay());
     }
 
-    private IEnumerator FadeOutVignette()
+    private IEnumerator TransitionToGameplay()
     {
-        // Gradually decrease vignette intensity
-        float elapsedTime = 0f;
-        while (elapsedTime < transitionDuration)
-        {
-            float normalizedTime = elapsedTime / transitionDuration;
+        // Step 1: Fade to black with cutscene camera still active
+        yield return StartCoroutine(FadeToBlack(false));
 
-            // Update vignette
-            if (vignette != null)
-            {
-                vignette.intensity.value = Mathf.Lerp(maxVignetteIntensity, 0f, normalizedTime);
-            }
+        // Step 2: Switch cameras while completely black
+        cutsceneCamera.gameObject.SetActive(false);
+        gameplayCamera.gameObject.SetActive(true);
 
-            // Update depth of field
-            if (depthOfField != null)
-            {
-                depthOfField.focusDistance.value = Mathf.Lerp(0.1f, 10f, normalizedTime);
-                depthOfField.aperture.value = Mathf.Lerp(32f, 0.1f, normalizedTime);
-            }
+        // Step 3: Wait a moment
+        yield return new WaitForSeconds(0.5f);
 
-            // Update blackout image
-            if (blackoutImage != null)
-            {
-                Color color = blackoutImage.color;
-                color.a = Mathf.Lerp(finalBlackoutAlpha, 0f, normalizedTime);
-                blackoutImage.color = color;
-            }
+        // Step 4: Fade in from black with gameplay camera
+        yield return StartCoroutine(FadeFromBlack());
 
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
-
-        // Ensure everything is reset to zero
-        if (vignette != null)
-        {
-            vignette.intensity.value = 0f;
-        }
-
-        if (depthOfField != null)
-        {
-            depthOfField.active = false;
-        }
-
-        if (blackoutImage != null)
-        {
-            Color color = blackoutImage.color;
-            color.a = 0f;
-            blackoutImage.color = color;
-            blackoutImage.gameObject.SetActive(false);
-        }
-
+        // Step 5: Complete the sequence
         EndCutsceneSequence();
     }
 

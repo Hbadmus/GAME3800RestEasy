@@ -3704,6 +3704,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1834106495}
     - target: {fileID: 2205889796768568053, guid: 1ba314f2da4ef81459620f5d49f73c28, type: 3}
+      propertyPath: cutsceneCamera
+      value: 
+      objectReference: {fileID: 2107176939}
+    - target: {fileID: 2205889796768568053, guid: 1ba314f2da4ef81459620f5d49f73c28, type: 3}
+      propertyPath: gameplayCamera
+      value: 
+      objectReference: {fileID: 2037732591}
+    - target: {fileID: 2205889796768568053, guid: 1ba314f2da4ef81459620f5d49f73c28, type: 3}
       propertyPath: postProcessVolume
       value: 
       objectReference: {fileID: 412657077}
@@ -53859,6 +53867,10 @@ PrefabInstance:
       propertyPath: m_InitialState
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7762830752896074962, guid: 76a565d511c0ee344af6274ba258130a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7795668850393263860, guid: 76a565d511c0ee344af6274ba258130a, type: 3}
       propertyPath: m_Name
       value: Cutscene1
@@ -53866,7 +53878,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7762830752896074962, guid: 76a565d511c0ee344af6274ba258130a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2107176940}
   m_SourcePrefab: {fileID: 100100000, guid: 76a565d511c0ee344af6274ba258130a, type: 3}
 --- !u!43 &1455595249
 Mesh:
@@ -78217,6 +78232,81 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 2636744263955644580, guid: 1339b196cbee848b88ab1ea80faa57e5, type: 3}
+--- !u!1 &2107176932 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7762830752896074962, guid: 76a565d511c0ee344af6274ba258130a, type: 3}
+  m_PrefabInstance: {fileID: 1443209135}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2107176933 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2906853938187089201, guid: 76a565d511c0ee344af6274ba258130a, type: 3}
+  m_PrefabInstance: {fileID: 1443209135}
+  m_PrefabAsset: {fileID: 0}
+--- !u!20 &2107176939 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 6662500805230577062, guid: 76a565d511c0ee344af6274ba258130a, type: 3}
+  m_PrefabInstance: {fileID: 1443209135}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2107176940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2107176932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 948f4100a11a5c24981795d21301da5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  volumeTrigger: {fileID: 2107176933}
+  volumeLayer:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  stopNaNPropagation: 1
+  finalBlitToCameraTarget: 0
+  antialiasingMode: 0
+  temporalAntialiasing:
+    jitterSpread: 0.75
+    sharpness: 0.25
+    stationaryBlending: 0.95
+    motionBlending: 0.85
+  subpixelMorphologicalAntialiasing:
+    quality: 2
+  fastApproximateAntialiasing:
+    fastMode: 0
+    keepAlpha: 0
+  fog:
+    enabled: 1
+    excludeSkybox: 1
+  debugLayer:
+    lightMeter:
+      width: 512
+      height: 256
+      showCurves: 1
+    histogram:
+      width: 512
+      height: 256
+      channel: 3
+    waveform:
+      exposure: 0.12
+      height: 256
+    vectorscope:
+      size: 256
+      exposure: 0.12
+    overlaySettings:
+      linearDepth: 0
+      motionColorIntensity: 4
+      motionGridSize: 64
+      colorBlindnessType: 0
+      colorBlindnessStrength: 1
+  m_Resources: {fileID: 11400000, guid: d82512f9c8e5d4a4d938b575d47f88d4, type: 2}
+  m_ShowToolkit: 0
+  m_ShowCustomSorter: 0
+  breakBeforeColorGrading: 0
+  m_BeforeTransparentBundles: []
+  m_BeforeStackBundles: []
+  m_AfterStackBundles: []
 --- !u!1 &2109739152
 GameObject:
   m_ObjectHideFlags: 0
