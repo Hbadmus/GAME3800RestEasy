@@ -89,7 +89,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        //Invoke("OnPuzzleCompleted", 10f);  // First cutscene at 10 seconds
+        Invoke("OnPuzzleCompleted", 10f);  // First cutscene at 10 seconds
         //Invoke("OnPuzzleCompleted", 60f);  // Second cutscene at 60 seconds
     }
 
