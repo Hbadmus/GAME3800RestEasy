@@ -43315,6 +43315,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4f1aa0ca217474f7eb1ca91734b35929, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1154000030}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4f1aa0ca217474f7eb1ca91734b35929, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1154000031}
     - targetCorrespondingSourceObject: {fileID: -1133200820140663038, guid: 4f1aa0ca217474f7eb1ca91734b35929, type: 3}
       insertIndex: -1
       addedObject: {fileID: 533142791}
@@ -43436,6 +43439,27 @@ MonoBehaviour:
   clockHand: {fileID: 1154000026}
   door: {fileID: 1154000029}
   correctOrder: 03000000090000000300000006000000
+--- !u!95 &1154000031
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1154000028}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b89e1dc0a8e664fb489c5c06b171098c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!43 &1155764565
 Mesh:
   m_ObjectHideFlags: 0
