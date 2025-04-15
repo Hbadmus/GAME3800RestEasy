@@ -5270,6 +5270,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CutsceneTerrain
       objectReference: {fileID: 0}
+    - target: {fileID: 4946309312118995751, guid: cbd2e7ed74d45604a86ebedf2bfb859b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9133444789429939556, guid: cbd2e7ed74d45604a86ebedf2bfb859b, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -42954,14 +42958,37 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -3587156450551540764, guid: 4f1aa0ca217474f7eb1ca91734b35929, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8c63a134f5b48404d8f941843d62a030, type: 2}
+    - target: {fileID: -1810387823381260121, guid: 4f1aa0ca217474f7eb1ca91734b35929, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8c63a134f5b48404d8f941843d62a030, type: 2}
     - target: {fileID: 919132149155446097, guid: 4f1aa0ca217474f7eb1ca91734b35929, type: 3}
       propertyPath: m_Name
       value: cuckooClock
       objectReference: {fileID: 0}
+    - target: {fileID: 5539762568587053599, guid: 4f1aa0ca217474f7eb1ca91734b35929, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8c63a134f5b48404d8f941843d62a030, type: 2}
+    - target: {fileID: 6471632652577132540, guid: 4f1aa0ca217474f7eb1ca91734b35929, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8c63a134f5b48404d8f941843d62a030, type: 2}
+    - target: {fileID: 7242099059102648122, guid: 4f1aa0ca217474f7eb1ca91734b35929, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8c63a134f5b48404d8f941843d62a030, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4f1aa0ca217474f7eb1ca91734b35929, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1154000030}
     - targetCorrespondingSourceObject: {fileID: 5112085884651191749, guid: 4f1aa0ca217474f7eb1ca91734b35929, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1154000027}
@@ -42983,6 +43010,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea4039db4c0f64f9e85ed5aac69e9593, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  clockHand: {fileID: 1154000026}
+  door: {fileID: 0}
+  correctOrder: 03000000090000000300000006000000
+--- !u!1 &1154000028 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 4f1aa0ca217474f7eb1ca91734b35929, type: 3}
+  m_PrefabInstance: {fileID: 1154000025}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1154000029 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -7172115383755543123, guid: 4f1aa0ca217474f7eb1ca91734b35929, type: 3}
+  m_PrefabInstance: {fileID: 1154000025}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1154000030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1154000028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea4039db4c0f64f9e85ed5aac69e9593, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clockHand: {fileID: 1154000026}
+  door: {fileID: 1154000029}
+  correctOrder: 03000000090000000300000006000000
 --- !u!43 &1155764565
 Mesh:
   m_ObjectHideFlags: 0
@@ -54526,6 +54581,10 @@ PrefabInstance:
     - target: {fileID: 7795668850393263860, guid: 76a565d511c0ee344af6274ba258130a, type: 3}
       propertyPath: m_Name
       value: Cutscene1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7795668850393263860, guid: 76a565d511c0ee344af6274ba258130a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
