@@ -8,6 +8,10 @@ TagManager:
   - GumballMachine
   - Book
   - pianokey
+  - MostImportant
+  - EhhImportant
+  - NotImportant
+  - EmotionalObject
   layers:
   - Default
   - TransparentFX

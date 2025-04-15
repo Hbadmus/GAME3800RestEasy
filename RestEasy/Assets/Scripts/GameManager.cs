@@ -23,6 +23,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private PlayableDirector[] cutsceneTimelines;
     [SerializeField] private float delayBeforeCutscene = 0.5f;
 
+    [Header("Puzzle Progression")]
+    [SerializeField] private GhostAI ghostAI;
+    [SerializeField] private int puzzlesCompleted = 0;
+    [SerializeField] private int totalPuzzlesForFullProgression = 4;
+
     private Vignette vignette;
     private DepthOfField depthOfField;
     private int currentCutsceneIndex = 0;
@@ -35,6 +40,12 @@ public class GameManager : MonoBehaviour
 
         // Initialize cameras
         SetupCameras();
+
+        // Ensure ghost AI is assigned
+        if (ghostAI == null)
+        {
+            ghostAI = FindObjectOfType<GhostAI>();
+        }
     }
 
     private void SetupPostProcessing()
@@ -93,11 +104,58 @@ public class GameManager : MonoBehaviour
         //Invoke("OnPuzzleCompleted", 60f);  // Second cutscene at 60 seconds
     }
 
+    // Method to track puzzle completion
+    public void IncrementPuzzleCompletion()
+    {
+        puzzlesCompleted++;
+        Debug.Log($"Puzzle completed. Total completed: {puzzlesCompleted}");
+
+        // Check for ghost progression
+        CheckAndUpdateGhostProgression();
+    }
+
+    private void CheckAndUpdateGhostProgression()
+    {
+        // Determine progression stage based on number of completed puzzles
+        int previousStage = GetCurrentProgressionStage();
+        int newStage = CalculateProgressionStage();
+
+        // If stage has changed, trigger revelatory moment
+        if (newStage > previousStage && ghostAI != null)
+        {
+            ghostAI.TriggerRevelatoryMoment(newStage);
+        }
+    }
+
+    // Calculate current progression stage
+    private int CalculateProgressionStage()
+    {
+        float completionRatio = (float)puzzlesCompleted / totalPuzzlesForFullProgression;
+
+        if (completionRatio >= 1.0f)
+            return 3;
+        else if (completionRatio >= 0.75f)
+            return 2;
+        else if (completionRatio >= 0.5f)
+            return 1;
+
+        return 0;
+    }
+
+    // Get current progression stage without triggering changes
+    private int GetCurrentProgressionStage()
+    {
+        return CalculateProgressionStage();
+    }
+
     // Call this method when a puzzle is completed (key is grabbed)
     public void OnPuzzleCompleted()
     {
         if (!isTransitioning)
         {
+            // Increment puzzle completion
+            IncrementPuzzleCompletion();
+
             StartCoroutine(TransitionToCutscene());
         }
     }
@@ -313,6 +371,5 @@ public class GameManager : MonoBehaviour
         // PlayerController.instance.EnableInput();
 
         isTransitioning = false;
-
     }
 }

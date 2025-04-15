@@ -2,11 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/// Controls Donna's haunting influence throughout the house. 
-/// This system represents the ghost's emotional presence within the entire house, affecting objects
-/// and creating environmental effects based on the ghost's current state.
 public class GhostAI : MonoBehaviour
 {
+    [System.Serializable]
+    public class EmotionalTagData
+    {
+        public string tag;
+        public float emotionalValue;
+        [Tooltip("Multiplier for force when in defensive state")]
+        public float defensiveForceMultiplier = 1.5f;
+    }
+
     [Header("References")]
     [SerializeField] private AudioSource ghostAudioSource;
     [SerializeField] private GameManager gameManager;
@@ -15,15 +21,15 @@ public class GhostAI : MonoBehaviour
     [SerializeField] private GhostState currentState = GhostState.Suspicious;
     [SerializeField] private float stateChangeTimer;
     [SerializeField] private float stateChangeInterval = 10f;
-    [SerializeField] private float activityRadius = 8f; // Radius around player where ghost activity occurs
+    [SerializeField] private float activityRadius = 8f;
 
     [Header("Interaction")]
     [SerializeField] private float smallObjectPushForce = 5f;
     [SerializeField] private float largeObjectPushForce = 10f;
-    [SerializeField] private float maxMovableObjectMass = 20f; // Objects heavier than this are considered "fixed"
+    [SerializeField] private float maxMovableObjectMass = 20f;
     [SerializeField] private float flickeringLightIntensity = 0.3f;
     [SerializeField] private float windIntensity = 1f;
-    [SerializeField] private float disturbanceDecayRate = 0.05f; // How quickly disturbance level decreases per second
+    [SerializeField] private float disturbanceDecayRate = 0.05f;
 
     [Header("Audio")]
     [SerializeField] private AudioClip[] suspiciousSounds;
@@ -35,11 +41,8 @@ public class GhostAI : MonoBehaviour
     [SerializeField] private AudioClip heartbeatSound;
 
     [Header("Emotional Tags")]
-    [SerializeField] private string[] highEmotionalTags; // Tags for objects with high emotional value (0.8-1.0)
-    [SerializeField] private string[] mediumEmotionalTags; // Tags for objects with medium emotional value (0.5-0.7)
-    [SerializeField] private string[] lowEmotionalTags; // Tags for objects with low emotional value (0.2-0.4)
+    [SerializeField] private List<EmotionalTagData> emotionalTags = new List<EmotionalTagData>();
 
-    // Internal tracking variables
     private Transform player;
     private Light[] lightsInScene;
     private GhostState previousState;
@@ -48,22 +51,20 @@ public class GhostAI : MonoBehaviour
     private int storyProgressionStage = 0;
     private float playerDisturbanceLevel = 0f;
     private Dictionary<string, float> emotionalTagValues = new Dictionary<string, float>();
+    private Dictionary<string, float> defensiveForceMultipliers = new Dictionary<string, float>();
 
-    // Singleton instance for easy access
     public static GhostAI Instance { get; private set; }
 
-    // Enum for ghost states
     public enum GhostState
     {
-        Suspicious,  // Default state, mild activity
-        Defensive,   // Actively tries to block or scare player
-        Revelatory,  // Shares memories/possession state
-        Accepting    // Helps the player subtly
+        Suspicious,
+        Defensive,
+        Revelatory,
+        Accepting
     }
 
     private void Awake()
     {
-        // Setup singleton pattern
         if (Instance == null)
         {
             Instance = this;
@@ -74,10 +75,8 @@ public class GhostAI : MonoBehaviour
             return;
         }
 
-        // Find the player in the scene
         player = GameObject.FindGameObjectWithTag("Player").transform;
 
-        // Find Game Manager if not assigned
         if (gameManager == null)
         {
             gameManager = FindObjectOfType<GameManager>();
@@ -87,150 +86,121 @@ public class GhostAI : MonoBehaviour
             }
         }
 
-        // Cache all lights in the scene
         lightsInScene = FindObjectsOfType<Light>();
 
-        // Initialize emotional tag values
         InitializeEmotionalTagValues();
 
-        // Set up the ghost's initial state
         SetGhostState(GhostState.Suspicious);
     }
 
     private void InitializeEmotionalTagValues()
     {
-        // Set high emotional value tags (0.8-1.0)
-        foreach (string tag in highEmotionalTags)
+        emotionalTagValues.Clear();
+        defensiveForceMultipliers.Clear();
+
+        foreach (var tagData in emotionalTags)
         {
-            emotionalTagValues[tag] = Random.Range(0.8f, 1.0f);
+            if (!string.IsNullOrEmpty(tagData.tag))
+            {
+                emotionalTagValues[tagData.tag] = Mathf.Clamp01(tagData.emotionalValue);
+                defensiveForceMultipliers[tagData.tag] = tagData.defensiveForceMultiplier;
+            }
         }
 
-        // Set medium emotional value tags (0.5-0.7)
-        foreach (string tag in mediumEmotionalTags)
+        Debug.Log("Initialized Emotional Tags:");
+        foreach (var tag in emotionalTagValues)
         {
-            emotionalTagValues[tag] = Random.Range(0.5f, 0.7f);
-        }
-
-        // Set low emotional value tags (0.2-0.4)
-        foreach (string tag in lowEmotionalTags)
-        {
-            emotionalTagValues[tag] = Random.Range(0.2f, 0.4f);
+            Debug.Log($"Tag: {tag.Key}, Emotional Value: {tag.Value:F2}");
         }
     }
 
     private void Update()
     {
-        // Track time since last ghost activity
         timeSinceLastActivity += Time.deltaTime;
 
-        // Check if we should change state based on timer
         stateChangeTimer -= Time.deltaTime;
         if (stateChangeTimer <= 0f)
         {
-            // Only change state randomly if not in Revelatory state
             if (currentState != GhostState.Revelatory)
             {
                 ConsiderStateChange();
             }
 
-            // Reset the timer
             stateChangeTimer = stateChangeInterval;
         }
 
-        // Handle state-specific behaviors
         switch (currentState)
         {
             case GhostState.Suspicious:
                 HandleSuspiciousState();
                 break;
-
             case GhostState.Defensive:
                 HandleDefensiveState();
                 break;
-
             case GhostState.Revelatory:
                 HandleRevelatoryState();
                 break;
-
             case GhostState.Accepting:
                 HandleAcceptingState();
                 break;
         }
 
-        // If we've been inactive for too long, do something
         if (timeSinceLastActivity > Random.Range(15f, 30f))
         {
             PerformRandomGhostActivity();
         }
 
-        // Gradually decrease disturbance level over time
         playerDisturbanceLevel = Mathf.Max(playerDisturbanceLevel - (Time.deltaTime * disturbanceDecayRate), 0f);
     }
 
     private void SetGhostState(GhostState newState)
     {
-        if (newState == currentState) return;
+        Debug.Log($"Attempting to change state. Current: {currentState}, Requested: {newState}, Disturbance: {playerDisturbanceLevel}");
+
+        if (newState == currentState)
+        {
+            Debug.Log("State change blocked - already in this state");
+            return;
+        }
 
         previousState = currentState;
         currentState = newState;
 
-        // Play a sound for the new state
         PlayRandomStateSound();
 
-        // Log state change for debugging
         Debug.Log("Ghost state changed from " + previousState + " to " + currentState);
     }
 
     private void ConsiderStateChange()
     {
-        // Check if player has triggered a state change through interaction
         if (playerDisturbanceLevel > 0.7f)
         {
             SetGhostState(GhostState.Defensive);
             return;
         }
 
-        // Consider story progression for state changes
-        if (storyProgressionStage >= 3 && Random.value < 0.3f)
+        if (storyProgressionStage >= 3)
         {
             SetGhostState(GhostState.Accepting);
             return;
         }
 
-        // Otherwise, mostly stay in Suspicious state with occasional Defensive moments
-        float stateRoll = Random.value;
-
-        if (stateRoll < 0.7f || currentState == GhostState.Revelatory)
-        {
-            SetGhostState(GhostState.Suspicious);
-        }
-        else if (stateRoll < 0.9f)
-        {
-            SetGhostState(GhostState.Defensive);
-        }
-        else if (storyProgressionStage >= 2)
-        {
-            SetGhostState(GhostState.Accepting);
-        }
+        // If no specific condition is met, default to Suspicious
+        SetGhostState(GhostState.Suspicious);
     }
 
     private void HandleSuspiciousState()
     {
-        // In suspicious state, the ghost mostly watches and creates minor disturbances
-
-        // Occasionally create environmental effects near the player (subtle)
         if (Random.value < 0.01f)
         {
             MoveRandomObjectsNearPlayer(false);
         }
 
-        // Sometimes flicker lights
         if (Random.value < 0.005f)
         {
             FlickerNearbyLight(false);
         }
 
-        // Very occasionally create wind effects
         if (Random.value < 0.002f)
         {
             StartCoroutine(CreateWindEffect(1.5f, false));
@@ -239,33 +209,26 @@ public class GhostAI : MonoBehaviour
 
     private void HandleDefensiveState()
     {
-        // In defensive state, the ghost actively tries to block or scare the player
-
-        // More frequently create environmental effects (intense)
         if (Random.value < 0.03f)
         {
             MoveRandomObjectsNearPlayer(true);
         }
 
-        // More aggressive light flickering
         if (Random.value < 0.01f)
         {
             FlickerNearbyLight(true);
         }
 
-        // Move objects in player's path
         if (Random.value < 0.008f)
         {
             MoveObjectInPlayerPath();
         }
 
-        // Affect doors
         if (Random.value < 0.01f)
         {
             AffectNearbyDoor();
         }
 
-        // Create wind disturbance
         if (Random.value < 0.007f)
         {
             StartCoroutine(CreateWindEffect(3f, true));
@@ -274,11 +237,8 @@ public class GhostAI : MonoBehaviour
 
     private void HandleRevelatoryState()
     {
-        // This state usually happens during scripted events when Donna is possessing the player
-
         if (!isPossessingPlayer)
         {
-            // Initiate possession sequence
             StartCoroutine(PossessionSequence());
         }
     }
@@ -287,23 +247,18 @@ public class GhostAI : MonoBehaviour
     {
         isPossessingPlayer = true;
 
-        // Signal to the player controller that possession is happening
         PlayerController playerController = player.GetComponent<PlayerController>();
         if (playerController != null)
         {
             playerController.BecomePossessed();
         }
 
-        // Play possession audio
         if (ghostAudioSource != null && heartbeatSound != null)
         {
             ghostAudioSource.PlayOneShot(heartbeatSound);
-
-            // Wait for audio to finish or a specific duration
-            yield return new WaitForSeconds(2.5f); // Adjust time as needed
+            yield return new WaitForSeconds(2.5f);
         }
 
-        // THEN trigger the cutscene via Game Manager
         gameManager.OnPuzzleCompleted();
 
         timeSinceLastActivity = 0f;
@@ -312,15 +267,11 @@ public class GhostAI : MonoBehaviour
 
     private void HandleAcceptingState()
     {
-        // In accepting state, the ghost subtly tries to help the player
-
-        // Subtle light effects near important objects
         if (Random.value < 0.01f)
         {
             HighlightClueObject();
         }
 
-        // Sometimes just create a subtle presence so player knows ghost is there
         if (Random.value < 0.01f)
         {
             CreateSubtlePresence();
@@ -329,11 +280,9 @@ public class GhostAI : MonoBehaviour
 
     private void MoveRandomObjectsNearPlayer(bool intense)
     {
-        // Find objects near the player to affect
         Collider[] nearbyObjects = Physics.OverlapSphere(player.position, activityRadius);
         List<Rigidbody> movableObjects = new List<Rigidbody>();
 
-        // Filter for objects with Rigidbodies
         foreach (Collider col in nearbyObjects)
         {
             Rigidbody rb = col.attachedRigidbody;
@@ -345,7 +294,6 @@ public class GhostAI : MonoBehaviour
 
         if (movableObjects.Count == 0) return;
 
-        // Affect some of these objects
         int objectsToAffect = intense ? Mathf.Min(3, movableObjects.Count) : Mathf.Min(1, movableObjects.Count);
 
         for (int i = 0; i < objectsToAffect; i++)
@@ -355,20 +303,120 @@ public class GhostAI : MonoBehaviour
                 int index = Random.Range(0, movableObjects.Count);
                 Rigidbody rb = movableObjects[index];
 
-                // Move the object
+                string objectTag = movableObjects[index].gameObject.tag;
+
                 float force = intense ? largeObjectPushForce : smallObjectPushForce;
-                // Adjust force based on mass (lighter objects move more)
                 force = force * (1f - (rb.mass / maxMovableObjectMass) * 0.8f);
 
-                ApplyForceToObject(rb, force);
+                ApplyForceToObject(rb, force, null, objectTag);
 
-                // Remove from list so we don't affect it again
                 movableObjects.RemoveAt(index);
             }
         }
 
         timeSinceLastActivity = 0f;
         Debug.Log("Ghost moved objects near player");
+    }
+
+    private void ApplyForceToObject(Rigidbody rb, float force, Vector3? customDirection = null, string tag = null)
+    {
+        if (rb == null) return;
+
+        if (currentState == GhostState.Defensive && !string.IsNullOrEmpty(tag) &&
+            defensiveForceMultipliers.TryGetValue(tag, out float multiplier))
+        {
+            force *= multiplier;
+            Debug.Log($"Applying defensive force multiplier for tag {tag}. New force: {force:F2}");
+        }
+
+        Vector3 forceDirection;
+        if (customDirection.HasValue)
+        {
+            forceDirection = customDirection.Value;
+        }
+        else
+        {
+            forceDirection = new Vector3(
+                Random.Range(-1f, 1f),
+                Random.Range(0.1f, 0.5f),
+                Random.Range(-1f, 1f)
+            ).normalized;
+        }
+
+        rb.AddForce(forceDirection * force, ForceMode.Impulse);
+
+        if (ghostAudioSource != null && objectMovementSounds.Length > 0)
+        {
+            AudioClip clip = objectMovementSounds[Random.Range(0, objectMovementSounds.Length)];
+            ghostAudioSource.PlayOneShot(clip, Mathf.Min(1.0f, rb.mass / 10f));
+        }
+    }
+
+    public void OnPlayerInteractWithEmotionalObject(string objectTag)
+    {
+        if (emotionalTagValues.ContainsKey(objectTag))
+        {
+            float emotionalValue = emotionalTagValues[objectTag];
+
+            Debug.Log($"Interacted with Emotional Object: {objectTag}");
+            Debug.Log($"Emotional Value: {emotionalValue:F2}");
+
+            // High emotional value objects trigger defensive state and increase disturbance
+            if (emotionalValue > 0.8f)
+            {
+                Debug.Log("High Emotional Value Detected - Becoming Defensive");
+                SetGhostState(GhostState.Defensive);
+                playerDisturbanceLevel = Mathf.Min(playerDisturbanceLevel + emotionalValue, 1f);
+            }
+            // Medium emotional value objects create moderate disturbance
+            else if (emotionalValue > 0.5f)
+            {
+                Debug.Log("Medium Emotional Value Detected - Moderate Disturbance");
+                playerDisturbanceLevel = Mathf.Min(playerDisturbanceLevel + emotionalValue, 1f);
+            }
+            // Low emotional value objects have minimal impact
+            else
+            {
+                Debug.Log("Low Emotional Value Detected - Minimal Disturbance");
+                playerDisturbanceLevel = Mathf.Min(playerDisturbanceLevel + (emotionalValue), 1f);
+            }
+
+            Debug.Log($"Updated Disturbance Level: {playerDisturbanceLevel:F2}");
+        }
+    }
+
+    public void TriggerRevelatoryMoment(int progressStage)
+    {
+        // Set the progression stage
+        storyProgressionStage = progressStage;
+
+        Debug.Log($"Entering Revlatory");
+
+
+        // Force Revelatory state - this happens BEFORE the cutscene
+        SetGhostState(GhostState.Revelatory);
+
+        // Immediately trigger the cutscene
+        gameManager.OnPuzzleCompleted();
+    }
+
+    public void ProcessCutsceneComplete()
+    {
+
+        // End possession
+        EndPossession();
+
+        // Determine next state based on progression
+        if (storyProgressionStage >= 3)
+        {
+            // If all major puzzles are completed, become accepting
+            SetGhostState(GhostState.Accepting);
+        }
+        else
+        {
+            // Otherwise, return to suspicious state
+            SetGhostState(GhostState.Suspicious);
+        }
     }
 
     private void FlickerNearbyLight(bool intense)
@@ -642,36 +690,6 @@ public class GhostAI : MonoBehaviour
         Debug.Log("Ghost created a wind effect around player");
     }
 
-    private void ApplyForceToObject(Rigidbody rb, float force, Vector3? customDirection = null)
-    {
-        if (rb == null) return;
-
-        // If we have a custom direction, use it; otherwise use a random direction
-        Vector3 forceDirection;
-        if (customDirection.HasValue)
-        {
-            forceDirection = customDirection.Value;
-        }
-        else
-        {
-            forceDirection = new Vector3(
-                Random.Range(-1f, 1f),
-                Random.Range(0.1f, 0.5f), // Slight upward force
-                Random.Range(-1f, 1f)
-            ).normalized;
-        }
-
-        // Apply the force
-        rb.AddForce(forceDirection * force, ForceMode.Impulse);
-
-        // Play a sound for object movement
-        if (ghostAudioSource != null && objectMovementSounds.Length > 0)
-        {
-            AudioClip clip = objectMovementSounds[Random.Range(0, objectMovementSounds.Length)];
-            ghostAudioSource.PlayOneShot(clip, Mathf.Min(1.0f, rb.mass / 10f));
-        }
-    }
-
     private void EndPossession()
     {
         isPossessingPlayer = false;
@@ -759,84 +777,6 @@ public class GhostAI : MonoBehaviour
         {
             AudioClip clip = currentStateSounds[Random.Range(0, currentStateSounds.Length)];
             ghostAudioSource.PlayOneShot(clip);
-        }
-    }
-
-    // Public methods for external access
-
-
-    /// Call this when the player interacts with an emotionally significant object
-
-    public void OnPlayerInteractWithEmotionalObject(string objectTag)
-    {
-        // Check if we know the emotional value of this tag
-        if (emotionalTagValues.ContainsKey(objectTag))
-        {
-            float emotionalValue = emotionalTagValues[objectTag];
-
-            // React based on emotional value
-            if (emotionalValue > 0.8f)
-            {
-                // Highly significant - might trigger Revelatory state
-                if (Random.value < emotionalValue * 0.7f && storyProgressionStage >= 1)
-                {
-                    SetGhostState(GhostState.Revelatory);
-                }
-                else
-                {
-                    // Otherwise be defensive
-                    SetGhostState(GhostState.Defensive);
-                }
-            }
-            else if (emotionalValue > 0.5f)
-            {
-                // Moderately significant
-                if (currentState != GhostState.Defensive)
-                {
-                    SetGhostState(GhostState.Defensive);
-                }
-
-                // Create some wind or flickering
-                if (Random.value < 0.5f)
-                    StartCoroutine(CreateWindEffect(2f, false));
-                else
-                    FlickerNearbyLight(false);
-            }
-            else
-            {
-                // Low significance - minor reaction
-                PlayRandomStateSound();
-            }
-
-            // Increment disturbance level, but cap it
-            playerDisturbanceLevel = Mathf.Min(playerDisturbanceLevel + (emotionalValue * 0.2f), 1f);
-
-            Debug.Log("Player interacted with emotional object: " + objectTag);
-        }
-    }
-
-
-    /// Called when a puzzle is completed to trigger revelatory state and cutscene
-
-    public void TriggerRevelatoryMoment(int progressStage)
-    {
-        storyProgressionStage = progressStage;
-        SetGhostState(GhostState.Revelatory);
-    }
-
-
-    /// Called by the GameManager when a cutscene is complete
-
-    public void ProcessCutsceneComplete()
-    {
-        // Called when a cutscene is finished
-        EndPossession();
-
-        // Advance ghost behavior based on story progression
-        if (storyProgressionStage >= 3)
-        {
-            // After multiple revelations, ghost becomes more accepting
-            SetGhostState(GhostState.Accepting);
         }
     }
 }
