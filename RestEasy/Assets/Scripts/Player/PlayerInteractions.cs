@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerInteractions : MonoBehaviour
 {
-    [SerializeField] private float interactionDistance = 3f;
+    [SerializeField] private float interactionDistance = 6f;
     [SerializeField] private Camera playerCamera;
 
     void Start()
@@ -44,6 +44,8 @@ public class PlayerInteractions : MonoBehaviour
         if (Physics.Raycast(ray, out hit, interactionDistance))
         {
             GameObject hitObject = hit.collider.gameObject;
+
+            Debug.Log("" + hitObject.name);
 
             // Check for emotional significance
             EmotionalObject emotionalObj = hitObject.GetComponent<EmotionalObject>();
