@@ -25,8 +25,13 @@ public class piano_script : MonoBehaviour
     // Define the correct sequence of keys
     private GameObject[] keySequence;
 
+    private keyScript ks;
+
     void Start()
     {
+        ks = FindObjectOfType<keyScript>();
+        
+
         keySequence = new GameObject[] { key2, key3, key4, key1 };
 
         // Color the keys for testing purposes (you can remove this later)
@@ -89,6 +94,10 @@ public class piano_script : MonoBehaviour
                 key2.GetComponent<Renderer>().material.color = Color.green;
                 key3.GetComponent<Renderer>().material.color = Color.green;
                 key4.GetComponent<Renderer>().material.color = Color.green;
+
+                // key right here 
+                // call method to summon key 
+                ks.summonKey(new Vector3(5.5f, -1f, 7f));
                 
             }
             else
