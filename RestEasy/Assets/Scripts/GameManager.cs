@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.UI;
+using UnityEngine.Timeline;
 
 public class GameManager : MonoBehaviour
 {
@@ -20,7 +21,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Camera cutsceneCamera;
 
     [Header("Cutscene Settings")]
-    [SerializeField] private PlayableDirector[] cutsceneTimelines;
+    [SerializeField] private PlayableDirector cutsceneTimeline;
     [SerializeField] private float delayBeforeCutscene = 0.5f;
 
     [Header("Puzzle Progression")]
@@ -28,10 +29,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int puzzlesCompleted = 0;
     [SerializeField] private int totalPuzzlesForFullProgression = 4;
 
+    [Header("Timeline Signal Settings")]
+    [SerializeField] private TimelineSignalReceiver timelineSignalReceiver;
     private Vignette vignette;
     private DepthOfField depthOfField;
     private int currentCutsceneIndex = 0;
     private bool isTransitioning = false;
+    private bool cutsceneInitialized = false;
 
     private void Awake()
     {
@@ -101,7 +105,11 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         Invoke("OnPuzzleCompleted", 1f);  // First cutscene at 10 seconds
-        //Invoke("OnPuzzleCompleted", 60f);  // Second cutscene at 60 seconds
+        Invoke("OnPuzzleCompleted", 25f);  // Second cutscene at 60 seconds
+        Invoke("OnPuzzleCompleted", 50f);  // Second cutscene at 60 seconds
+        Invoke("OnPuzzleCompleted", 75f);  // Second cutscene at 60 seconds
+
+
     }
 
     // Method to track puzzle completion
@@ -156,11 +164,22 @@ public class GameManager : MonoBehaviour
             // Increment puzzle completion
             IncrementPuzzleCompletion();
 
-            StartCoroutine(TransitionToCutscene());
+            // Check if we need to start or resume the timeline
+            if (cutsceneInitialized && timelineSignalReceiver != null && timelineSignalReceiver.IsPaused())
+            {
+                // Timeline is already playing but paused - resume it
+                StartCoroutine(TransitionToCutscene(true));
+            }
+            else
+            {
+                // First time - need to start the timeline from beginning
+                StartCoroutine(TransitionToCutscene(false));
+            }
         }
     }
 
-    private IEnumerator TransitionToCutscene()
+    // Modify your TransitionToCutscene method to handle resuming
+    private IEnumerator TransitionToCutscene(bool resumeExisting = false)
     {
         isTransitioning = true;
 
@@ -174,14 +193,30 @@ public class GameManager : MonoBehaviour
         gameplayCamera.gameObject.SetActive(false);
         cutsceneCamera.gameObject.SetActive(true);
 
-        // Step 3: Start the cutscene BEFORE fading in
-        StartPlayingCutscene();
+        // Step 3: Start the cutscene OR resume it
+        if (resumeExisting)
+        {
+            ResumePlayingCutscene();
+        }
+        else
+        {
+            StartPlayingCutscene();
+        }
 
-        // Step 4: Wait a short moment for the cutscene to initialize
+        // Step 4: Wait a short moment for the cutscene to initialize or resume
         yield return new WaitForSeconds(0.3f);
 
         // Step 5: Fade in from black with cutscene camera
         yield return StartCoroutine(FadeFromBlack());
+    }
+
+    // New method to resume playing
+    private void ResumePlayingCutscene()
+    {
+        if (timelineSignalReceiver != null)
+        {
+            timelineSignalReceiver.ResumeTimeline();
+        }
     }
 
     private IEnumerator FadeToBlack(bool enableBlur = true)
@@ -302,51 +337,23 @@ public class GameManager : MonoBehaviour
 
     private void StartPlayingCutscene()
     {
-        if (cutsceneTimelines == null || cutsceneTimelines.Length == 0)
+        if (cutsceneTimeline == null)
         {
-            Debug.LogError("No cutscene timelines assigned to GameManager!");
+            Debug.LogError("No cutscene timeline assigned to GameManager!");
             EndCutsceneSequence();
             return;
         }
 
-        // Ensure index is within bounds
-        if (currentCutsceneIndex >= cutsceneTimelines.Length)
-        {
-            Debug.LogWarning("Cutscene index out of range! Resetting to 0.");
-            currentCutsceneIndex = 0;
-        }
+        // Reset timeline to beginning
+        cutsceneTimeline.time = 0;
 
-        // Get the current timeline to play
-        PlayableDirector currentTimeline = cutsceneTimelines[currentCutsceneIndex];
+        // Play the timeline
+        cutsceneTimeline.Play();
+        cutsceneInitialized = true;
 
-        if (currentTimeline != null)
-        {
-            // Subscribe to timeline completion event
-            currentTimeline.stopped += OnCutsceneComplete;
-
-            // Play the timeline
-            currentTimeline.Play();
-        }
-        else
-        {
-            Debug.LogError($"Timeline at index {currentCutsceneIndex} is null!");
-            EndCutsceneSequence();
-        }
     }
 
-    private void OnCutsceneComplete(PlayableDirector director)
-    {
-        // Unsubscribe from the event
-        director.stopped -= OnCutsceneComplete;
-
-        // Increment cutscene index for next time
-        currentCutsceneIndex++;
-
-        // Start transition back to gameplay
-        StartCoroutine(TransitionToGameplay());
-    }
-
-    private IEnumerator TransitionToGameplay()
+    public IEnumerator TransitionToGameplay()
     {
         // Step 1: Fade to black with cutscene camera still active
         yield return StartCoroutine(FadeToBlack(false));
