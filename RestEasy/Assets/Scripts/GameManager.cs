@@ -104,12 +104,12 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        /*
         Invoke("OnPuzzleCompleted", 1f);  // First cutscene at 10 seconds
         Invoke("OnPuzzleCompleted", 25f);  // Second cutscene at 60 seconds
         Invoke("OnPuzzleCompleted", 50f);  // Second cutscene at 60 seconds
         Invoke("OnPuzzleCompleted", 75f);  // Second cutscene at 60 seconds
-
-
+        */
     }
 
     // Method to track puzzle completion
