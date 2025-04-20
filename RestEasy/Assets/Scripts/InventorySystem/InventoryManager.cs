@@ -6,15 +6,19 @@ public class InventoryManager : MonoBehaviour
 {
     public GameObject slotPrefab;
     public List<InventorySlot> inventorySlots = new List<InventorySlot>(12);
+    public bool isEnabled = false;
 
     private void OnEnable()
     {
         Inventory.OnInventoryChange += DrawInventory;
+        isEnabled = true;
     }
 
     private void OnDisable()
     {
         Inventory.OnInventoryChange -= DrawInventory;
+        isEnabled = false;
+
     }
 
     void ResetInventory() //TODO: refactor so it's more efficient, maybe just remove that one or update that one
