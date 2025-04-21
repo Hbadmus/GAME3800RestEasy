@@ -6881,7 +6881,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pickupTruckTag: PickupTruck
-<<<<<<< HEAD
 --- !u!1 &311766000
 GameObject:
   m_ObjectHideFlags: 0
@@ -6962,13 +6961,6 @@ Transform:
   - {fileID: 1327129390}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-=======
---- !u!4 &314072409 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7502005852469792143, guid: 6a3dbb2a6b4da624abc81f5dc716f1c7, type: 3}
-  m_PrefabInstance: {fileID: 358704450}
-  m_PrefabAsset: {fileID: 0}
->>>>>>> main
 --- !u!1 &315988862 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9026554179856397690, guid: 1339b196cbee848b88ab1ea80faa57e5, type: 3}
@@ -7967,7 +7959,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pickupTruckTag: PickupTruck
-<<<<<<< HEAD
 --- !u!114 &424568543 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8797215018762828616, guid: 6b6b96351d92344319bef396ac2e4c17, type: 3}
@@ -8012,8 +8003,6 @@ Transform:
   - {fileID: 344954461}
   m_Father: {fileID: 172980610}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-=======
->>>>>>> main
 --- !u!1001 &428478209
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17190,7 +17179,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -4205203838335478351, guid: 1339b196cbee848b88ab1ea80faa57e5, type: 3}
-<<<<<<< HEAD
 --- !u!114 &1011141054 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 9180796918924666488, guid: 6b6b96351d92344319bef396ac2e4c17, type: 3}
@@ -17334,8 +17322,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8233d90336aea43098adf6dbabd606a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-=======
->>>>>>> main
 --- !u!1 &1018288734
 GameObject:
   m_ObjectHideFlags: 0
@@ -17875,7 +17861,6 @@ MonoBehaviour:
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-<<<<<<< HEAD
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.41963, y: -1.8568, z: -0.46313}
   m_LocalScale: {x: 2.9310765, y: 0.015444539, z: 2.1559281}
@@ -18027,9 +18012,6 @@ Mesh:
   m_IndexFormat: 0
   m_IndexBuffer: 000001000200010003000200040005000600050007000600080009000a0009000b000a000c000d000e000d000f000e00100011001200110013001200140015001600150017001600
   m_VertexData:
-=======
-  m_Modification:
->>>>>>> main
     serializedVersion: 3
     m_TransformParent: {fileID: 774080817}
     m_Modifications:
@@ -18511,7 +18493,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6349646184920332968, guid: b66b8d023437444ee8128384d5a9ba38, type: 3}
   m_PrefabInstance: {fileID: 450201623}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< HEAD
   m_GameObject: {fileID: 1101241768}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
@@ -18647,9 +18628,6 @@ GameObject:
   m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &1104288435
-=======
---- !u!4 &1103123044 stripped
->>>>>>> main
 Transform:
   m_CorrespondingSourceObject: {fileID: 5561037946434667683, guid: 75f68a1f4dd36214383ec174a8d8bf67, type: 3}
   m_PrefabInstance: {fileID: 1840838641}
@@ -21016,7 +20994,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pickupTruckTag: PickupTruck
-<<<<<<< HEAD
 --- !u!114 &1252916678 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4674349479378899050, guid: 6b6b96351d92344319bef396ac2e4c17, type: 3}
@@ -21529,8 +21506,6 @@ Transform:
   - {fileID: 385487979}
   m_Father: {fileID: 172980610}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-=======
->>>>>>> main
 --- !u!1 &1261355656 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4077907443470059321, guid: cbd2e7ed74d45604a86ebedf2bfb859b, type: 3}
