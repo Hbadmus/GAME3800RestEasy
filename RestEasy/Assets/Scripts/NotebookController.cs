@@ -7,14 +7,19 @@ public class NotebookController : MonoBehaviour
 {
     [Header("UI References")]
     public GameObject notebookCanvas;
-    public Button leftArrowButton;
-    public Button rightArrowButton;
+    public Button leftArrowButton;   // Keep button references for visual feedback
+    public Button rightArrowButton;  // and clicking option
 
     [Header("Page Setup")]
     public TextMeshProUGUI leftPageTitle;
     public TextMeshProUGUI rightPageTitle;
     public TextMeshProUGUI leftPageContent;
     public TextMeshProUGUI rightPageContent;
+
+    [Header("Input Settings")]
+    public KeyCode toggleKey = KeyCode.N;
+    public KeyCode previousPageKey = KeyCode.LeftArrow;
+    public KeyCode nextPageKey = KeyCode.RightArrow;
 
     [System.Serializable]
     public class NotebookHint
@@ -44,6 +49,29 @@ public class NotebookController : MonoBehaviour
         // Setup button listeners
         leftArrowButton.onClick.AddListener(PreviousPage);
         rightArrowButton.onClick.AddListener(NextPage);
+    }
+
+    private void Update()
+    {
+        // Check for key press to toggle notebook
+        if (Input.GetKeyDown(toggleKey))
+        {
+            ToggleNotebook();
+        }
+
+        // Only process page navigation when notebook is open
+        if (notebookCanvas.activeSelf)
+        {
+            // Check for left/right arrow keys
+            if (Input.GetKeyDown(previousPageKey))
+            {
+                PreviousPage();
+            }
+            else if (Input.GetKeyDown(nextPageKey))
+            {
+                NextPage();
+            }
+        }
     }
 
     public void ToggleNotebook()
@@ -116,7 +144,7 @@ public class NotebookController : MonoBehaviour
             rightPageContent.gameObject.SetActive(false);
         }
 
-        // Update arrow button states
+        // Update arrow button states (visual feedback)
         leftArrowButton.interactable = (currentPageIndex >= 2);
         rightArrowButton.interactable = (currentPageIndex < pages.Count - 2);
     }
