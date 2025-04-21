@@ -12,6 +12,7 @@ TagManager:
   - EhhImportant
   - NotImportant
   - EmotionalObject
+  - PickupTruck
   layers:
   - Default
   - TransparentFX
