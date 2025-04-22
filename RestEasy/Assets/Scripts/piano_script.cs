@@ -43,8 +43,11 @@ public class piano_script : MonoBehaviour
 
     void Update()
     {
+        if (!Camera.main)
+                return; 
+        
         if (Input.GetMouseButtonDown(0))
-        {
+        {       
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
