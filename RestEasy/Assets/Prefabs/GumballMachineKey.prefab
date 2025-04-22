@@ -9,9 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4798388048388334440}
+  - component: {fileID: 1190383856604705507}
+  - component: {fileID: 4155889291312394933}
   m_Layer: 0
   m_Name: GumballMachineKey
-  m_TagString: Untagged
+  m_TagString: Collectible
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -26,12 +28,46 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -9.917, y: -10.8601, z: 27.9007}
-  m_LocalScale: {x: 0.011838183, y: 0.011838185, z: 0.011838185}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3644701806894458630}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1190383856604705507
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 735038487106494973}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a5fda5bdd47641e9930df6ab5150345, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gumballMachineKeyData: {fileID: 11400000, guid: e5677c60ca49d4062ace55a3bc5c9617, type: 2}
+--- !u!65 &4155889291312394933
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 735038487106494973}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.020586014, y: 0.16284436, z: 0.06346512}
+  m_Center: {x: 0.00051498413, y: -0.011462539, z: -0.000541687}
 --- !u!1001 &3827546790594756845
 PrefabInstance:
   m_ObjectHideFlags: 0
