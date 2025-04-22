@@ -21,11 +21,19 @@ public class Inventory : MonoBehaviour
     private void OnEnable()
     {
         Coin.OnCoinCollected += Add;
+        BookshelfKey.OnBookshelfKeyCollected += Add;
+        ClockKey.OnClockKeyCollected += Add;
+        GumballMachineKey.OnGumballMachineKeyCollected += Add;
+        PianoKey.OnPianoKeyCollected += Add;
     }
 
     private void OnDisable()
     {
         Coin.OnCoinCollected -= Add;
+        BookshelfKey.OnBookshelfKeyCollected -= Add;
+        ClockKey.OnClockKeyCollected -= Add;
+        GumballMachineKey.OnGumballMachineKeyCollected -= Add;
+        PianoKey.OnPianoKeyCollected -= Add;
     }
 
     public void Add(ItemData itemData)

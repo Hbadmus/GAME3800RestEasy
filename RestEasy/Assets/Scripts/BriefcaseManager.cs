@@ -4,7 +4,25 @@ using UnityEngine;
 
 public class BriefcaseManager : MonoBehaviour
 {
+    public GameObject briefcase;
     public GameObject[] coins = {};
+    public GameObject bookshelfKey;
+    public GameObject clockKey;
+    public GameObject gumballMachineKey;
+    public GameObject pianoKey;
+
+    private bool isOpen = false;
+
+    void Update() {
+        if (Input.GetKeyDown(KeyCode.I) && !isOpen) {
+            briefcase.SetActive(true);
+            isOpen = true;
+        }
+        else if (Input.GetKeyDown(KeyCode.I) && isOpen) {
+            briefcase.SetActive(false);
+            isOpen = false;
+        }
+    }
 
     private void OnEnable()
     {
@@ -24,6 +42,18 @@ public class BriefcaseManager : MonoBehaviour
                 Debug.Log(inventory[i].stackSize);
                 UpdateCoins(inventory[i].stackSize);
             }
+            if (inventory[i].itemData.displayName == "BookshelfKey") {
+                bookshelfKey.SetActive(true);
+            }
+            if (inventory[i].itemData.displayName == "ClockKey") {
+                clockKey.SetActive(true);
+            }
+            if (inventory[i].itemData.displayName == "GumballMachineKey") {
+                gumballMachineKey.SetActive(true);
+            }
+            if (inventory[i].itemData.displayName == "PianoKey") {
+                pianoKey.SetActive(true);
+            }
         }
     }
 
@@ -37,4 +67,6 @@ public class BriefcaseManager : MonoBehaviour
             coins[j].SetActive(false);
         }
     }
+
+    
 }
