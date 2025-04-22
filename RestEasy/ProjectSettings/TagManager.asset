@@ -13,11 +13,12 @@ TagManager:
   - NotImportant
   - EmotionalObject
   - PickupTruck
+  - ExamineCamera
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Examine
   - Water
   - UI
   - 
