@@ -91,6 +91,8 @@ public class GhostAI : MonoBehaviour
         InitializeEmotionalTagValues();
 
         SetGhostState(GhostState.Suspicious);
+
+        Debug.Log($"GhostAI found {lightsInScene.Length} lights in the scene");
     }
 
     private void InitializeEmotionalTagValues()
@@ -224,15 +226,11 @@ public class GhostAI : MonoBehaviour
             MoveObjectInPlayerPath();
         }
 
-        if (Random.value < 0.01f)
+        if (Random.value < 0.1f)
         {
             AffectNearbyDoor();
         }
 
-        if (Random.value < 0.007f)
-        {
-            StartCoroutine(CreateWindEffect(3f, true));
-        }
     }
 
     private void HandleRevelatoryState()
@@ -552,33 +550,42 @@ public class GhostAI : MonoBehaviour
     {
         // Find doors near the player
         Collider[] nearbyObjects = Physics.OverlapSphere(player.position, activityRadius * 1.5f);
+        List<DoorBehavior> nearbyDoors = new List<DoorBehavior>();
 
         foreach (Collider col in nearbyObjects)
         {
-            // Check if this might be a door (has a hinge joint)
-            HingeJoint hinge = col.GetComponent<HingeJoint>(); //may need to change
-            Rigidbody rb = col.GetComponent<Rigidbody>();
-
-            if (hinge != null && rb != null)
+            // Check if this is a door (has DoorBehavior component)
+            DoorBehavior doorBehavior = col.GetComponent<DoorBehavior>();
+            if (doorBehavior == null)
             {
-                // Determine a good direction to push the door
-                Vector3 pushDirection = Random.insideUnitSphere.normalized;
+                doorBehavior = col.GetComponentInParent<DoorBehavior>();
+            }
 
-                // Apply force to move door
-                rb.AddForce(pushDirection * largeObjectPushForce, ForceMode.Impulse);
-
-                // Play sound
-                if (ghostAudioSource != null && objectMovementSounds.Length > 0)
-                {
-                    ghostAudioSource.PlayOneShot(objectMovementSounds[Random.Range(0, objectMovementSounds.Length)]);
-                }
-
-                // Only affect one door at a time
-                timeSinceLastActivity = 0f;
-                Debug.Log("Ghost affected a door: " + col.name);
-                break;
+            if (doorBehavior != null)
+            {
+                nearbyDoors.Add(doorBehavior);
             }
         }
+
+        if (nearbyDoors.Count == 0)
+        {
+            Debug.Log("No doors found nearby to slam");
+            return;
+        }
+
+        // Choose a random door to slam
+        DoorBehavior doorToSlam = nearbyDoors[Random.Range(0, nearbyDoors.Count)];
+        doorToSlam.SlamDoor();
+
+        // Play sound (optional, as DoorBehavior already plays a sound)
+        if (ghostAudioSource != null && objectMovementSounds.Length > 0)
+        {
+            AudioClip clip = objectMovementSounds[Random.Range(0, objectMovementSounds.Length)];
+            ghostAudioSource.PlayOneShot(clip, 0.7f);
+        }
+
+        timeSinceLastActivity = 0f;
+        Debug.Log("Ghost slammed a door: " + doorToSlam.name);
     }
 
     private void HighlightClueObject()

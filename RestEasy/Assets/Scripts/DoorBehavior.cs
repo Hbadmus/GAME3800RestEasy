@@ -10,6 +10,10 @@ public class DoorBehavior : MonoBehaviour
 
     void Start()
     {
+        if (startOpen)
+        {
+            open = true;
+        }
         animator = GetComponentInParent<Animator>();
         if (!animator)
             Debug.LogWarning("Attach an animator component to door's parent object");
