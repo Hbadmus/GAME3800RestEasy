@@ -17,8 +17,6 @@ public class BookshelfPuzzle : MonoBehaviour
             isPuzzleCompleted = true;
             secretCompartment.SetActive(false);
 
-        }
-        else if (isPuzzleCompleted) {
             Rigidbody keyRB = puzzleKey.GetComponent<Rigidbody>();
             Debug.Log(puzzleKey.transform.position.y + " " + (ground.transform.position.y + 10));
             if (puzzleKey.transform.position.y < -15) {

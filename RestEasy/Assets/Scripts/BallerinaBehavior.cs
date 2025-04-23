@@ -16,7 +16,7 @@ public class BallerinaBehavior : MonoBehaviour
         
     }
 
-    void OnMouseDown()
+    public void OnMouseDown()
     {
         if (isPlaying)
         {
