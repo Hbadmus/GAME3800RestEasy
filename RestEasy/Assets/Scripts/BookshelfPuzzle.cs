@@ -14,8 +14,10 @@ public class BookshelfPuzzle : MonoBehaviour
     void Update() {
         if (!isPuzzleCompleted && targetBooksToCollect == booksCollected) {
             Debug.Log("Bookshelf puzzle done!");
+            AudioManager.instance.PlaySFX("puzzle-success");
             isPuzzleCompleted = true;
             secretCompartment.SetActive(false);
+            puzzleKey.SetActive(true);
 
             Rigidbody keyRB = puzzleKey.GetComponent<Rigidbody>();
             Debug.Log(puzzleKey.transform.position.y + " " + (ground.transform.position.y + 10));

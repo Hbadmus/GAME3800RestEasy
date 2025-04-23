@@ -14,6 +14,8 @@ public class GumballPuzzle : MonoBehaviour
     private static int coinsCollectedSoFar = 0;
     private bool finishedPuzzle = false;
 
+    public GameObject puzzleKey;
+
     public void CompleteGumballPuzzle()
     {
         if (inventory.itemDictionary.TryGetValue(coinData, out InventoryItem item) && !finishedPuzzle)
@@ -32,7 +34,7 @@ public class GumballPuzzle : MonoBehaviour
 
                 AudioManager.instance.PlaySFX("gumball-machine-rumbling");
                 AudioManager.instance.PlaySFX("puzzle-success", AudioManager.instance.GetLengthOfSFXClip("gumball-machine-rumbling"));
-                
+                puzzleKey.SetActive(true);
                 //AudioSource.PlayClipAtPoint(machineRumblingSFX, Camera.main.transform.position);
                 //AudioSource.PlayClipAtPoint(successSFX, Camera.main.transform.position);
             }

@@ -27,6 +27,9 @@ public class piano_script : MonoBehaviour
 
     private keyScript ks;
 
+    public GameObject puzzleKey;
+
+
     void Start()
     {
         ks = FindObjectOfType<keyScript>();
@@ -100,8 +103,9 @@ public class piano_script : MonoBehaviour
 
                 // key right here 
                 // call method to summon key 
-                ks.summonKey(new Vector3(5.5f, -1f, 7f));
-                
+                puzzleKey.SetActive(true);
+
+
             }
             else
             {

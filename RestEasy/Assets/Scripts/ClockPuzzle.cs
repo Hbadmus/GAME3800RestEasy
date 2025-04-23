@@ -13,6 +13,8 @@ public class ClockPuzzle : MonoBehaviour
     float timeSinceLastClick = 0f;
     bool puzzleSolved = false;
     Animator animator;
+    public GameObject puzzleKey;
+
 
     void Start()
     {
@@ -80,7 +82,9 @@ public class ClockPuzzle : MonoBehaviour
     void PuzzleSolved()
     {
         animator.SetTrigger("puzzleSolved");
+        AudioManager.instance.PlaySFX("puzzle-success");
         puzzleSolved = true;
+        puzzleKey.SetActive(true);
     }
 
     void OnAnimationEnd()
