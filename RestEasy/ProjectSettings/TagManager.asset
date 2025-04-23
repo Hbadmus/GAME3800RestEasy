@@ -14,6 +14,7 @@ TagManager:
   - EmotionalObject
   - PickupTruck
   - ExamineCamera
+  - Notebook
   layers:
   - Default
   - TransparentFX

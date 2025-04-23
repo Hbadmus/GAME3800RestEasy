@@ -6046,6 +6046,8 @@ GameObject:
   - component: {fileID: 245376443}
   - component: {fileID: 245376442}
   - component: {fileID: 245376441}
+  - component: {fileID: 245376444}
+  - component: {fileID: 245376445}
   m_Layer: 0
   m_Name: PianoBooks
   m_TagString: Untagged
@@ -6140,6 +6142,34 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 245376439}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &245376444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 245376439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2691758918c8441b78a106162f137cb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notebook: {fileID: 0}
+  hintEnabledOnClick: HA_1a
+  destroyColliderAfter: 0
+--- !u!114 &245376445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 245376439}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdfcef167bf0e42db801fbfa50464eb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  examinablePrefab: {fileID: 0}
 --- !u!1 &245758801 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2286442132172637779, guid: cbd2e7ed74d45604a86ebedf2bfb859b, type: 3}
@@ -6271,6 +6301,8 @@ GameObject:
   - component: {fileID: 254078992}
   - component: {fileID: 254078991}
   - component: {fileID: 254078990}
+  - component: {fileID: 254078994}
+  - component: {fileID: 254078993}
   m_Layer: 0
   m_Name: CultClothes
   m_TagString: Untagged
@@ -6365,6 +6397,34 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 254078988}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &254078993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 254078988}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdfcef167bf0e42db801fbfa50464eb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  examinablePrefab: {fileID: 0}
+--- !u!114 &254078994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 254078988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2691758918c8441b78a106162f137cb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notebook: {fileID: 0}
+  hintEnabledOnClick: BE_3a
+  destroyColliderAfter: 0
 --- !u!224 &254317734 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7581116673152158275, guid: a0d3b0c0f9bdd1b42a34d4233333cdc6, type: 3}
@@ -7164,11 +7224,11 @@ GameObject:
   - component: {fileID: 311766001}
   m_Layer: 0
   m_Name: Notebook
-  m_TagString: Untagged
+  m_TagString: Notebook
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &311766001
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7192,30 +7252,130 @@ MonoBehaviour:
   previousPageKey: 276
   nextPageKey: 275
   pages:
-  - pageTitle: Hakim
+  - pageTitle: Conversation w/ Donna's Landlord
     pageHints:
-    - hintText: Hes 20
+    - hintText: Donna Reese died age 67 from complications with heart disease
       isEnabled: 0
-      hintID: 20
-    - hintText: hes black
-      isEnabled: 1
-      hintID: black
-  - pageTitle: el jefes
+      hintID: CO_1a
+    - hintText: Landlord mentioned some kind of locked vault door upstairs, I should
+        check that out ASAP
+      isEnabled: 0
+      hintID: CO_2a
+    - hintText: Described Donna as kind but cagey, suspects she was hiding some sort
+        of criminal ties
+      isEnabled: 0
+      hintID: CO_2b
+    - hintText: 'Neighbors have been hearing strange noises and seeing lights flickering:
+        classic signs of a trapped spirit'
+      isEnabled: 0
+      hintID: CO_3a
+    - hintText: 'She''s stuck here because of regret '
+      isEnabled: 0
+      hintID: CO_3b
+    - hintText: I need to figure out what that regret is and resolve it so her spirit
+        can be at peace
+      isEnabled: 0
+      hintID: CO_3c
+  - pageTitle: Living Room
     pageHints:
-    - hintText: Hes 20
+    - hintText: 'FAKE BOOKSHELF\nI don''t think this is a real bookshelf; I can''t
+        pull out any of the books. It seems like they''re connected to some sort
+        of internal lock mechanism. I need to figure out the right books to push '
       isEnabled: 0
-      hintID: 20
-    - hintText: hes black
-      isEnabled: 1
-      hintID: black
-  - pageTitle: wings over
+      hintID: LR_1a
+    - hintText: SYMBOL PAINTINGS\nThese paintings are odd, and they don't fit in
+        with the other art she has. I wonder what they're for, or if those symbols
+        mean something
+      isEnabled: 0
+      hintID: LR_2a
+    - hintText: SCRIBBLED DRAWING\nThis drawing was definitely done by a child. I
+        thought the landlord said she didn't have any kids? Although, it does look
+        pretty old... I bet it's from her childhood. I wonder who it's supposed to
+        be?
+      isEnabled: 0
+      hintID: LR_3a
+  - pageTitle: Kitchen
     pageHints:
-    - hintText: Hes 20
+    - hintText: THAWED CHICKEN\nDonna must've left this out to thaw and never got
+        the chance to cook it. She wasn't expecting to die. That's common for spirits
+        whose regret traps them in the living realm
       isEnabled: 0
-      hintID: 20
-    - hintText: hes black
-      isEnabled: 1
-      hintID: black
+      hintID: KI_1a
+  - pageTitle: Dining Room
+    pageHints:
+    - hintText: GUMBALL MACHINE\nA gumball machine that takes four coins. That's
+        a first. Maybe I can find some change lying around and see what it spits
+        out?
+      isEnabled: 0
+      hintID: DR_1a
+    - hintText: I think I found one of the coins for this machine
+      isEnabled: 0
+      hintID: DR_1b
+    - hintText: MUSIC BOX\nHuh. I initially thought this music box was broken, but
+        maybe not. It seems to run fine after those first few weird ticks. I think
+        I'll carry it with me.
+      isEnabled: 0
+      hintID: DR_2a
+    - hintText: "OLD PHOTO\\nThis is an old photo, likely taken in the 1970\u2019s
+        or earlier. The girl looks like she\u2019s about 10, probably Donna. The
+        boy looks much younger \u2013 maybe a cousin or a brother? "
+      isEnabled: 0
+      hintID: DR_3a
+  - pageTitle: Bedroom
+    pageHints:
+    - hintText: CUCKOO CLOCK\nThis clock isn't functional, and it only has one hand.
+        Maybe it's a lock of some kind?
+      isEnabled: 0
+      hintID: BE_1a
+    - hintText: GETAWAY BAG\n I found a suitcase with clothes, $10,000 in cash, and
+        a gun. I haven't seen any indications of illegal activity. What was this
+        for?
+      isEnabled: 0
+      hintID: BE_2a
+    - hintText: STRANGE CLOTHES\nThese clothes seem out of place with the rest of
+        her wardrobe, and they look decades old
+      isEnabled: 0
+      hintID: BE_3a
+    - hintText: The kids in that old photo downstairs were wearing these same clothes.
+        So that was her! Where did these clothes come from, and why does she still
+        have them?
+      isEnabled: 0
+      hintID: BE_3b
+  - pageTitle: Bathroom
+    pageHints:
+    - hintText: 'MEDICATION\nAmlodipine: a heart disease medication. That tracks
+        given what the landlord said about her cause of death'
+      isEnabled: 0
+      hintID: BA_1a
+  - pageTitle: Study
+    pageHints:
+    - hintText: PIANO\nWhat a gorgeous piano, I wonder if she played often
+      isEnabled: 0
+      hintID: ST_1a
+    - hintText: It seems like her spirit is playing a song on the piano. I know the
+        chords are <chords>, but I'm not familiar with pianos. I need a diagram of
+        which keys play which note
+      isEnabled: 0
+      hintID: ST_1b
+    - hintText: VAULT DOOR\nThis must be the vault the landlord mentioned. Four locks
+        seems a little excessive... I guess this means I'm looking for four keys
+      isEnabled: 0
+      hintID: ST_2a
+    - hintText: 'I just found the first key after solving a puzzle. The rest of them
+        will probably be hidden around the house as well. What was her deal? '
+      isEnabled: 0
+      hintID: ST_2b
+    - hintText: PUSHPINNED MAP\nThis world map has a ton of push pins. Mostly in
+        the US, but there are also a good amount in Russia and Eastern Europe. What
+        does this mean?
+      isEnabled: 0
+      hintID: ST_3a
+  - pageTitle: Hall
+    pageHints:
+    - hintText: PIANO BOOK\nJotted down this diagram of the piano keys in case it's
+        useful later
+      isEnabled: 0
+      hintID: HA_1a
 --- !u!4 &311766002
 Transform:
   m_ObjectHideFlags: 0
@@ -11529,6 +11689,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pickupTruckTag: PickupTruck
+--- !u!1 &663312694 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4707536678440515352, guid: d04e20bccca744ceba4786aa3912052b, type: 3}
+  m_PrefabInstance: {fileID: 2248334591651640473}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &664979072 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2443213223552555959, guid: cbd2e7ed74d45604a86ebedf2bfb859b, type: 3}
@@ -12569,6 +12734,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6fea2183b69e14059bbe9ea8cadf8770, type: 3}
       insertIndex: -1
       addedObject: {fileID: 749443945}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6fea2183b69e14059bbe9ea8cadf8770, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 749443947}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6fea2183b69e14059bbe9ea8cadf8770, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 749443946}
   m_SourcePrefab: {fileID: 100100000, guid: 6fea2183b69e14059bbe9ea8cadf8770, type: 3}
 --- !u!4 &749443943 stripped
 Transform:
@@ -12601,6 +12772,34 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.0062279557, y: 0.00024458408, z: 0.006548458}
   m_Center: {x: 0, y: -0.000035632744, z: 6.448411e-12}
+--- !u!114 &749443946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 749443944}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdfcef167bf0e42db801fbfa50464eb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  examinablePrefab: {fileID: 0}
+--- !u!114 &749443947
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 749443944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2691758918c8441b78a106162f137cb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notebook: {fileID: 0}
+  hintEnabledOnClick: DR_3a
+  destroyColliderAfter: 0
 --- !u!1 &752714657 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7986668789265599071, guid: cbd2e7ed74d45604a86ebedf2bfb859b, type: 3}
@@ -13782,6 +13981,9 @@ GameObject:
   - component: {fileID: 760516940}
   - component: {fileID: 760516942}
   - component: {fileID: 760516941}
+  - component: {fileID: 760516944}
+  - component: {fileID: 760516943}
+  - component: {fileID: 760516945}
   m_Layer: 0
   m_Name: IgorDrawing
   m_TagString: Untagged
@@ -13856,6 +14058,55 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 760516939}
   m_Mesh: {fileID: -6360558719573625917, guid: 5f7a514cc10424fa4bc40e7028a3e8b8, type: 3}
+--- !u!114 &760516943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 760516939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2691758918c8441b78a106162f137cb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notebook: {fileID: 0}
+  hintEnabledOnClick: LR_3a
+  destroyColliderAfter: 0
+--- !u!65 &760516944
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 760516939}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.017737202, y: 0.017324196, z: 0.0003287442}
+  m_Center: {x: 0, y: -4.2180524e-19, z: -0.0000469635}
+--- !u!114 &760516945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 760516939}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdfcef167bf0e42db801fbfa50464eb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  examinablePrefab: {fileID: 0}
 --- !u!1 &760655702
 GameObject:
   m_ObjectHideFlags: 0
@@ -16472,6 +16723,7 @@ GameObject:
   - component: {fileID: 893470293}
   - component: {fileID: 893470292}
   - component: {fileID: 893470291}
+  - component: {fileID: 893470295}
   m_Layer: 0
   m_Name: Pills
   m_TagString: Untagged
@@ -16568,6 +16820,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 893470289}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &893470295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 893470289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2691758918c8441b78a106162f137cb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notebook: {fileID: 0}
+  hintEnabledOnClick: BA_1a
+  destroyColliderAfter: 0
 --- !u!1 &899418869 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9141816029861474070, guid: ee13eb0ca037040fe932268e26595558, type: 3}
@@ -18428,6 +18695,9 @@ GameObject:
   - component: {fileID: 1032988905}
   - component: {fileID: 1032988907}
   - component: {fileID: 1032988906}
+  - component: {fileID: 1032988909}
+  - component: {fileID: 1032988908}
+  - component: {fileID: 1032988910}
   m_Layer: 0
   m_Name: CultActivityMap
   m_TagString: Untagged
@@ -18501,6 +18771,55 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1032988904}
   m_Mesh: {fileID: -5141985450832305362, guid: 5f7a514cc10424fa4bc40e7028a3e8b8, type: 3}
+--- !u!114 &1032988908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1032988904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdfcef167bf0e42db801fbfa50464eb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  examinablePrefab: {fileID: 0}
+--- !u!65 &1032988909
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1032988904}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.02, y: 0.045092024, z: 0.020000001}
+  m_Center: {x: -5.6034466e-19, y: 0.008420355, z: -8.7758706e-20}
+--- !u!114 &1032988910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1032988904}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2691758918c8441b78a106162f137cb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notebook: {fileID: 0}
+  hintEnabledOnClick: ST_3a
+  destroyColliderAfter: 0
 --- !u!1 &1036590710 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6892345221869849426, guid: cbd2e7ed74d45604a86ebedf2bfb859b, type: 3}
@@ -19101,6 +19420,8 @@ GameObject:
   - component: {fileID: 1077178665}
   - component: {fileID: 1077178664}
   - component: {fileID: 1077178663}
+  - component: {fileID: 1077178667}
+  - component: {fileID: 1077178666}
   m_Layer: 0
   m_Name: GetawayBag
   m_TagString: Untagged
@@ -19195,6 +19516,34 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1077178661}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1077178666
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1077178661}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdfcef167bf0e42db801fbfa50464eb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  examinablePrefab: {fileID: 0}
+--- !u!114 &1077178667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1077178661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2691758918c8441b78a106162f137cb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notebook: {fileID: 0}
+  hintEnabledOnClick: BE_2a
+  destroyColliderAfter: 0
 --- !u!1 &1077588963
 GameObject:
   m_ObjectHideFlags: 0
@@ -20452,6 +20801,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4f1aa0ca217474f7eb1ca91734b35929, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1154000040}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4f1aa0ca217474f7eb1ca91734b35929, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1154000042}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4f1aa0ca217474f7eb1ca91734b35929, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1154000041}
     - targetCorrespondingSourceObject: {fileID: -1133200820140663038, guid: 4f1aa0ca217474f7eb1ca91734b35929, type: 3}
       insertIndex: -1
       addedObject: {fileID: 533142791}
@@ -20620,6 +20975,34 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.023117622, y: 0.021558812, z: 0.030003252}
   m_Center: {x: 1.9565613e-10, y: -0.00077940326, z: 0.0024215307}
+--- !u!114 &1154000041
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1154000028}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdfcef167bf0e42db801fbfa50464eb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  examinablePrefab: {fileID: 0}
+--- !u!114 &1154000042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1154000028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2691758918c8441b78a106162f137cb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notebook: {fileID: 0}
+  hintEnabledOnClick: BE_1a
+  destroyColliderAfter: 0
 --- !u!4 &1156228469 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4365344250252800, guid: 68b6eead0fbdcb44999d84e3209ff603, type: 3}
@@ -23093,6 +23476,12 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ee13eb0ca037040fe932268e26595558, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2069941673}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ee13eb0ca037040fe932268e26595558, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2069941672}
     - targetCorrespondingSourceObject: {fileID: -3778644264426962316, guid: ee13eb0ca037040fe932268e26595558, type: 3}
       insertIndex: -1
       addedObject: {fileID: 841794821}
@@ -27169,6 +27558,55 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6855494908891169165, guid: d04e20bccca744ceba4786aa3912052b, type: 3}
   m_PrefabInstance: {fileID: 2248334591651640473}
   m_PrefabAsset: {fileID: 0}
+--- !u!65 &1606865066
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 663312694}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 13.985302, y: 12.238132, z: 1.6150684}
+  m_Center: {x: 0.06891306, y: 0.5248155, z: -0.0064070267}
+--- !u!114 &1606865067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 663312694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2691758918c8441b78a106162f137cb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notebook: {fileID: 0}
+  hintEnabledOnClick: LR_1a
+  destroyColliderAfter: 1
+--- !u!114 &1606865068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 663312694}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdfcef167bf0e42db801fbfa50464eb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  examinablePrefab: {fileID: 0}
 --- !u!1 &1630011922 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -3694183122572411541, guid: 1339b196cbee848b88ab1ea80faa57e5, type: 3}
@@ -28812,6 +29250,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 87a759e52e6424126b2bf299dfd42f63, type: 3}
   m_PrefabInstance: {fileID: 1723312727}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1724253758 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5953188951225098778, guid: 3c77a3f105cc24c888752f44cc077c36, type: 3}
+  m_PrefabInstance: {fileID: 7591617404896585641}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1726871125 stripped
 GameObject:
@@ -31094,6 +31537,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1917733264}
   - component: {fileID: 1917733263}
+  - component: {fileID: 1917733265}
+  - component: {fileID: 1917733266}
   m_Layer: 0
   m_Name: CluePaintings
   m_TagString: Untagged
@@ -31141,6 +31586,34 @@ Transform:
   - {fileID: 1723312728}
   m_Father: {fileID: 539874756}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1917733265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1917733262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2691758918c8441b78a106162f137cb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notebook: {fileID: 0}
+  hintEnabledOnClick: LR_2a
+  destroyColliderAfter: 0
+--- !u!114 &1917733266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1917733262}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdfcef167bf0e42db801fbfa50464eb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  examinablePrefab: {fileID: 0}
 --- !u!1 &1919847536 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 53ff66d583a11472bb41d5edf7ebe45f, type: 3}
@@ -34331,6 +34804,47 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 481936827085001915, guid: bd570fcecad1c4f358449a32db7b0843, type: 3}
   m_PrefabInstance: {fileID: 4208396898104109712}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2069941671 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: ee13eb0ca037040fe932268e26595558, type: 3}
+  m_PrefabInstance: {fileID: 1281526785}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2069941672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2069941671}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2691758918c8441b78a106162f137cb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notebook: {fileID: 0}
+  hintEnabledOnClick: ST_1a
+  destroyColliderAfter: 0
+--- !u!65 &2069941673
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2069941671}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.1955943, y: 1.8771462, z: 1.4515501}
+  m_Center: {x: -0.0105174985, y: 0.12874015, z: 0.6933633}
 --- !u!1 &2072808766 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7451430449882071712, guid: a5f9a108211d743a692ee17b46da5422, type: 3}
@@ -34967,6 +35481,8 @@ GameObject:
   - component: {fileID: 2123600804}
   - component: {fileID: 2123600803}
   - component: {fileID: 2123600802}
+  - component: {fileID: 2123600806}
+  - component: {fileID: 2123600805}
   m_Layer: 0
   m_Name: ThawedChicken
   m_TagString: Untagged
@@ -35061,6 +35577,34 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2123600800}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &2123600805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2123600800}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdfcef167bf0e42db801fbfa50464eb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  examinablePrefab: {fileID: 0}
+--- !u!114 &2123600806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2123600800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2691758918c8441b78a106162f137cb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notebook: {fileID: 0}
+  hintEnabledOnClick: KI_1a
+  destroyColliderAfter: 0
 --- !u!1 &2129058092
 GameObject:
   m_ObjectHideFlags: 0
@@ -35073,6 +35617,8 @@ GameObject:
   - component: {fileID: 2129058096}
   - component: {fileID: 2129058095}
   - component: {fileID: 2129058094}
+  - component: {fileID: 2129058098}
+  - component: {fileID: 2129058097}
   m_Layer: 0
   m_Name: BallerinaMusicBox
   m_TagString: Untagged
@@ -35167,6 +35713,34 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2129058092}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &2129058097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2129058092}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdfcef167bf0e42db801fbfa50464eb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  examinablePrefab: {fileID: 0}
+--- !u!114 &2129058098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2129058092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2691758918c8441b78a106162f137cb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notebook: {fileID: 0}
+  hintEnabledOnClick: DR_2a
+  destroyColliderAfter: 0
 --- !u!1 &2130207305
 GameObject:
   m_ObjectHideFlags: 0
@@ -38198,6 +38772,15 @@ PrefabInstance:
       insertIndex: 496
       addedObject: {fileID: 345178206}
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4707536678440515352, guid: d04e20bccca744ceba4786aa3912052b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1606865066}
+    - targetCorrespondingSourceObject: {fileID: 4707536678440515352, guid: d04e20bccca744ceba4786aa3912052b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1606865067}
+    - targetCorrespondingSourceObject: {fileID: 4707536678440515352, guid: d04e20bccca744ceba4786aa3912052b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1606865068}
     - targetCorrespondingSourceObject: {fileID: 1084394075978091218, guid: d04e20bccca744ceba4786aa3912052b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2015278392}
@@ -44656,6 +45239,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1179102187}
     m_Modifications:
+    - target: {fileID: 217758645509742164, guid: 3c77a3f105cc24c888752f44cc077c36, type: 3}
+      propertyPath: m_Size.x
+      value: 0.013380973
+      objectReference: {fileID: 0}
+    - target: {fileID: 217758645509742164, guid: 3c77a3f105cc24c888752f44cc077c36, type: 3}
+      propertyPath: m_Size.y
+      value: 0.0026261052
+      objectReference: {fileID: 0}
+    - target: {fileID: 217758645509742164, guid: 3c77a3f105cc24c888752f44cc077c36, type: 3}
+      propertyPath: m_Size.z
+      value: 0.022809932
+      objectReference: {fileID: 0}
+    - target: {fileID: 217758645509742164, guid: 3c77a3f105cc24c888752f44cc077c36, type: 3}
+      propertyPath: m_Center.x
+      value: -0.00007921757
+      objectReference: {fileID: 0}
+    - target: {fileID: 217758645509742164, guid: 3c77a3f105cc24c888752f44cc077c36, type: 3}
+      propertyPath: m_Center.y
+      value: 0.000001807366
+      objectReference: {fileID: 0}
+    - target: {fileID: 217758645509742164, guid: 3c77a3f105cc24c888752f44cc077c36, type: 3}
+      propertyPath: m_Center.z
+      value: 0.010347185
+      objectReference: {fileID: 0}
     - target: {fileID: 1235249396564916612, guid: 3c77a3f105cc24c888752f44cc077c36, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -44907,13 +45514,47 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5953188951225098778, guid: 3c77a3f105cc24c888752f44cc077c36, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7591617404896585651}
+    - targetCorrespondingSourceObject: {fileID: 5953188951225098778, guid: 3c77a3f105cc24c888752f44cc077c36, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7591617404896585652}
   m_SourcePrefab: {fileID: 100100000, guid: 3c77a3f105cc24c888752f44cc077c36, type: 3}
 --- !u!4 &7591617404896585646 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6473407023130949792, guid: 3c77a3f105cc24c888752f44cc077c36, type: 3}
   m_PrefabInstance: {fileID: 7591617404896585641}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7591617404896585651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1724253758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdfcef167bf0e42db801fbfa50464eb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  examinablePrefab: {fileID: 0}
+--- !u!114 &7591617404896585652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1724253758}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2691758918c8441b78a106162f137cb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notebook: {fileID: 0}
+  hintEnabledOnClick: ST_2a
+  destroyColliderAfter: 0
 --- !u!1001 &7631071820271692761
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -46324,13 +46965,52 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2009954357630405357, guid: ece6bbaccb1eb4f11b83fc52e1e8f031, type: 3}
       insertIndex: -1
       addedObject: {fileID: 198042663}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3894121511229064724, guid: ece6bbaccb1eb4f11b83fc52e1e8f031, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8567702650883968061}
+    - targetCorrespondingSourceObject: {fileID: 3894121511229064724, guid: ece6bbaccb1eb4f11b83fc52e1e8f031, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8567702650883968060}
   m_SourcePrefab: {fileID: 100100000, guid: ece6bbaccb1eb4f11b83fc52e1e8f031, type: 3}
 --- !u!4 &8567702650883968058 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3450307440228157655, guid: ece6bbaccb1eb4f11b83fc52e1e8f031, type: 3}
   m_PrefabInstance: {fileID: 8567702650883968057}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &8567702650883968059 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3894121511229064724, guid: ece6bbaccb1eb4f11b83fc52e1e8f031, type: 3}
+  m_PrefabInstance: {fileID: 8567702650883968057}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8567702650883968060
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8567702650883968059}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdfcef167bf0e42db801fbfa50464eb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  examinablePrefab: {fileID: 0}
+--- !u!114 &8567702650883968061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8567702650883968059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2691758918c8441b78a106162f137cb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notebook: {fileID: 0}
+  hintEnabledOnClick: DR_1a
+  destroyColliderAfter: 0
 --- !u!1001 &8571597942469574611
 PrefabInstance:
   m_ObjectHideFlags: 0
