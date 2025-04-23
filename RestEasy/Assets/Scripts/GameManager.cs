@@ -29,6 +29,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int puzzlesCompleted = 0;
     [SerializeField] private int totalPuzzlesForFullProgression = 4;
 
+    [Header("Door Keys")]
+    [SerializeField] private GameObject[] doorKeys;  // Array to hold the 4 door keys
+    [SerializeField] private bool[] keyCollectedStatus;
+
     [Header("Timeline Signal Settings")]
     [SerializeField] private TimelineSignalReceiver timelineSignalReceiver;
     private Vignette vignette;
@@ -49,6 +53,29 @@ public class GameManager : MonoBehaviour
         if (ghostAI == null)
         {
             ghostAI = FindObjectOfType<GhostAI>();
+        }
+
+        // Initialize key collection status array
+        if (doorKeys != null)
+        {
+            keyCollectedStatus = new bool[doorKeys.Length];
+
+            // Add click listeners to each door key
+            for (int i = 0; i < doorKeys.Length; i++)
+            {
+                if (doorKeys[i] != null)
+                {
+                    // Add KeyInteraction component if not already present
+                    KeyInteraction keyInteraction = doorKeys[i].GetComponent<KeyInteraction>();
+                    if (keyInteraction == null)
+                    {
+                        keyInteraction = doorKeys[i].AddComponent<KeyInteraction>();
+                    }
+
+                    // Pass the index to the key
+                    keyInteraction.Initialize(i, this);
+                }
+            }
         }
     }
 
@@ -104,10 +131,10 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-       // Invoke("OnPuzzleCompleted", 1f);  // First cutscene at 10 seconds
-       // Invoke("OnPuzzleCompleted", 25f);  // Second cutscene at 60 seconds
-       // Invoke("OnPuzzleCompleted", 50f);  // Second cutscene at 60 seconds
-       // Invoke("OnPuzzleCompleted", 75f);  // Second cutscene at 60 seconds
+        // Invoke("OnPuzzleCompleted", 1f);  // First cutscene at 10 seconds
+        // Invoke("OnPuzzleCompleted", 25f);  // Second cutscene at 60 seconds
+        // Invoke("OnPuzzleCompleted", 50f);  // Second cutscene at 60 seconds
+        // Invoke("OnPuzzleCompleted", 75f);  // Second cutscene at 60 seconds
     }
 
     // Method to track puzzle completion
@@ -376,5 +403,24 @@ public class GameManager : MonoBehaviour
         // PlayerController.instance.EnableInput();
 
         isTransitioning = false;
+    }
+    public void CollectKey(int keyIndex)
+    {
+        if (keyIndex >= 0 && keyIndex < keyCollectedStatus.Length && !keyCollectedStatus[keyIndex])
+        {
+            Debug.Log($"Key {keyIndex} collected!");
+            keyCollectedStatus[keyIndex] = true;
+
+            // Hide the key
+            if (doorKeys[keyIndex] != null)
+            {
+                doorKeys[keyIndex].SetActive(false);
+            }
+            
+            ghostAI.OnKeyCollected();
+
+            // Call OnPuzzleCompleted to progress the game
+            OnPuzzleCompleted();
+        }
     }
 }

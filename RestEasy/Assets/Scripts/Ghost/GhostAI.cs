@@ -40,6 +40,14 @@ public class GhostAI : MonoBehaviour
     [SerializeField] private AudioClip windSound;
     [SerializeField] private AudioClip heartbeatSound;
 
+    [Header("Key Progression")]
+    [SerializeField] private int keysCollected = 0;
+    [SerializeField] private int keysForPartialAcceptance = 3;
+    [SerializeField] private int keysForFullAcceptance = 4;
+    [SerializeField] private GameObject sparkleEffectPrefab;
+    [SerializeField] private float sparkleChance = 0.3f;
+    
+
     [Header("Emotional Tags")]
     [SerializeField] private List<EmotionalTagData> emotionalTags = new List<EmotionalTagData>();
 
@@ -52,7 +60,8 @@ public class GhostAI : MonoBehaviour
     private float playerDisturbanceLevel = 0f;
     private Dictionary<string, float> emotionalTagValues = new Dictionary<string, float>();
     private Dictionary<string, float> defensiveForceMultipliers = new Dictionary<string, float>();
-
+    private float disturbanceMultiplier = 1.0f;
+    private List<GameObject> activeSparkleEffects = new List<GameObject>();
     public static GhostAI Instance { get; private set; }
 
     public enum GhostState
@@ -175,15 +184,31 @@ public class GhostAI : MonoBehaviour
 
     private void ConsiderStateChange()
     {
-        if (playerDisturbanceLevel > 0.7f)
+        // If fully accepting (all keys), stay in accepting state
+        if (keysCollected >= keysForFullAcceptance)
+        {
+            SetGhostState(GhostState.Accepting);
+            return;
+        }
+
+        // If partially accepting but disturbance is high, become defensive
+        if (keysCollected >= keysForPartialAcceptance && playerDisturbanceLevel > 0.7f)
         {
             SetGhostState(GhostState.Defensive);
             return;
         }
 
-        if (storyProgressionStage >= 3)
+        // If partially accepting and disturbance is moderate, maintain accepting
+        if (keysCollected >= keysForPartialAcceptance && playerDisturbanceLevel < 0.5f)
         {
             SetGhostState(GhostState.Accepting);
+            return;
+        }
+
+        // Otherwise use normal logic
+        if (playerDisturbanceLevel > 0.7f)
+        {
+            SetGhostState(GhostState.Defensive);
             return;
         }
 
@@ -226,7 +251,7 @@ public class GhostAI : MonoBehaviour
             MoveObjectInPlayerPath();
         }
 
-        if (Random.value < 0.1f)
+        if (Random.value < 0.01f)
         {
             AffectNearbyDoor();
         }
@@ -262,17 +287,108 @@ public class GhostAI : MonoBehaviour
         timeSinceLastActivity = 0f;
         Debug.Log("Ghost has possessed the player and triggered cutscene");
     }
-
     private void HandleAcceptingState()
     {
-        if (Random.value < 0.01f)
-        {
-            HighlightClueObject();
-        }
+        // Clean up any old sparkle effects
+        CleanupSparkleEffects();
 
         if (Random.value < 0.01f)
         {
             CreateSubtlePresence();
+        }
+
+        // Add chance to create sparkle effects on interactables
+        if (Random.value < sparkleChance)
+        {
+            SparkleRandomInteractableObject();
+        }
+    }
+    private void SparkleRandomInteractableObject()
+    {
+        // Find objects tagged as interactable near the player
+        Collider[] nearbyObjects = Physics.OverlapSphere(player.position, activityRadius * 1.5f);
+        List<GameObject> interactableObjects = new List<GameObject>();
+
+        foreach (Collider col in nearbyObjects)
+        {
+            // Check for tags that indicate interactable objects
+            if (col.CompareTag("Interactable") || col.CompareTag("Key") ||
+                col.CompareTag("Clue") || col.CompareTag("EmotionalObject"))
+            {
+                interactableObjects.Add(col.gameObject);
+            }
+        }
+
+        if (interactableObjects.Count == 0) return;
+
+        // Choose a random object to highlight
+        GameObject objectToSparkle = interactableObjects[Random.Range(0, interactableObjects.Count)];
+
+        // Create sparkle effect
+        if (sparkleEffectPrefab != null)
+        {
+            // Calculate position: Use the object's position as a base
+            Vector3 sparklePosition = objectToSparkle.transform.position;
+
+            // Add an upward offset (in world space)
+            sparklePosition.y += Random.Range(0.3f, 0.5f);
+
+            // Add small random horizontal offsets (in world space)
+            sparklePosition.x += Random.Range(-0.2f, 0.2f);
+            sparklePosition.z += Random.Range(-0.2f, 0.2f);
+
+            // Create the sparkle effect
+            GameObject sparkle = Instantiate(sparkleEffectPrefab, sparklePosition, Quaternion.Euler(-90, 0, 0));
+
+            // Ensure the rotation is locked and doesn't change
+            if (sparkle.GetComponent<Rigidbody>())
+            {
+                sparkle.GetComponent<Rigidbody>().freezeRotation = true;
+            }
+            // Add to list for tracking
+            activeSparkleEffects.Add(sparkle);
+
+            // Let the particle system play naturally and destroy when done
+            ParticleSystem ps = sparkle.GetComponent<ParticleSystem>();
+            if (ps != null)
+            {
+                float duration = ps.main.duration + ps.main.startLifetimeMultiplier;
+                StartCoroutine(RemoveSparkleWhenDone(sparkle, duration));
+            }
+
+            Debug.Log($"Ghost created sparkle effect on {objectToSparkle.name}");
+        }
+    }
+
+    // Cleanup method for sparkle effects
+    private void CleanupSparkleEffects()
+    {
+        // Just remove null entries from the list
+        activeSparkleEffects.RemoveAll(effect => effect == null);
+    }
+
+
+    // Coroutine to remove sparkle effects after a delay
+    private IEnumerator RemoveSparkleEffect(GameObject effect, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        if (effect != null)
+        {
+            activeSparkleEffects.Remove(effect);
+            Destroy(effect);
+        }
+    }
+
+    private IEnumerator RemoveSparkleWhenDone(GameObject effect, float duration)
+    {
+        // Wait for the particle system to finish
+        yield return new WaitForSeconds(duration);
+
+        if (effect != null)
+        {
+            activeSparkleEffects.Remove(effect);
+            Destroy(effect);
         }
     }
 
@@ -354,32 +470,40 @@ public class GhostAI : MonoBehaviour
     {
         if (emotionalTagValues.ContainsKey(objectTag))
         {
-            float emotionalValue = emotionalTagValues[objectTag];
+            float emotionalValue = emotionalTagValues[objectTag] * disturbanceMultiplier;
 
             Debug.Log($"Interacted with Emotional Object: {objectTag}");
-            Debug.Log($"Emotional Value: {emotionalValue:F2}");
+            Debug.Log($"Emotional Value (after multiplier): {emotionalValue:F2}");
 
-            // High emotional value objects trigger defensive state and increase disturbance
-            if (emotionalValue > 0.8f)
+            // Only get upset if disturbance multiplier isn't zero
+            if (disturbanceMultiplier > 0)
             {
-                Debug.Log("High Emotional Value Detected - Becoming Defensive");
-                SetGhostState(GhostState.Defensive);
-                playerDisturbanceLevel = Mathf.Min(playerDisturbanceLevel + emotionalValue, 1f);
+                // High emotional value objects trigger defensive state and increase disturbance
+                if (emotionalValue > 0.8f)
+                {
+                    Debug.Log("High Emotional Value Detected - Becoming Defensive");
+                    SetGhostState(GhostState.Defensive);
+                    playerDisturbanceLevel = Mathf.Min(playerDisturbanceLevel + emotionalValue, 1f);
+                }
+                // Medium emotional value objects create moderate disturbance
+                else if (emotionalValue > 0.5f)
+                {
+                    Debug.Log("Medium Emotional Value Detected - Moderate Disturbance");
+                    playerDisturbanceLevel = Mathf.Min(playerDisturbanceLevel + emotionalValue, 1f);
+                }
+                // Low emotional value objects have minimal impact
+                else
+                {
+                    Debug.Log("Low Emotional Value Detected - Minimal Disturbance");
+                    playerDisturbanceLevel = Mathf.Min(playerDisturbanceLevel + (emotionalValue), 1f);
+                }
+
+                Debug.Log($"Updated Disturbance Level: {playerDisturbanceLevel:F2}");
             }
-            // Medium emotional value objects create moderate disturbance
-            else if (emotionalValue > 0.5f)
-            {
-                Debug.Log("Medium Emotional Value Detected - Moderate Disturbance");
-                playerDisturbanceLevel = Mathf.Min(playerDisturbanceLevel + emotionalValue, 1f);
-            }
-            // Low emotional value objects have minimal impact
             else
             {
-                Debug.Log("Low Emotional Value Detected - Minimal Disturbance");
-                playerDisturbanceLevel = Mathf.Min(playerDisturbanceLevel + (emotionalValue), 1f);
+                Debug.Log("Ghost is fully accepting - no disturbance caused");
             }
-
-            Debug.Log($"Updated Disturbance Level: {playerDisturbanceLevel:F2}");
         }
     }
 
@@ -784,6 +908,28 @@ public class GhostAI : MonoBehaviour
         {
             AudioClip clip = currentStateSounds[Random.Range(0, currentStateSounds.Length)];
             ghostAudioSource.PlayOneShot(clip);
+        }
+    }
+
+    // Update this method to track key collection
+    public void OnKeyCollected()
+    {
+        keysCollected++;
+        Debug.Log($"Ghost senses {keysCollected} keys collected");
+
+        // Check for state progression
+        if (keysCollected >= keysForFullAcceptance)
+        {
+            // Fully accepting - no more getting upset
+            disturbanceMultiplier = 0f;
+            SetGhostState(GhostState.Accepting);
+        }
+        else if (keysCollected >= keysForPartialAcceptance)
+        {
+            // Keep the disturbance multiplier at 1.0 (unchanged)
+            // This means emotional objects will have the same impact
+            disturbanceMultiplier = 1.0f;
+            SetGhostState(GhostState.Accepting);
         }
     }
 }
