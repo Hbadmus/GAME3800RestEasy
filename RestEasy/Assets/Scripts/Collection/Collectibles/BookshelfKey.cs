@@ -11,8 +11,7 @@ public class BookshelfKey : MonoBehaviour, ICollectible
 
     public void Collect()
     {
-        AudioManager.instance.PlaySFX("collecting-coin");
-        //AudioSource.PlayClipAtPoint(collectCoinSFX, Camera.main.transform.position);
+        AudioManager.instance.PlaySFX("collecting-key");
 
         Debug.Log("Bookshelf key collected");
         Destroy(gameObject);

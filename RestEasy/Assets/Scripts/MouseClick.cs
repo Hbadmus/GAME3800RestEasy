@@ -26,21 +26,22 @@ public class MouseClick : MonoBehaviour
 
             bool hit = Physics.Raycast(ray, out raycastHit);
 
-            //Debug.Log(raycastHit.transform.name);
+            Debug.Log(raycastHit.transform.name);
             if (hit && raycastHit.transform.gameObject.tag == "Collectible") 
             {
                 raycastHit.transform.gameObject.GetComponentInChildren<ICollectible>().Collect();
             }
-            else if (hit && raycastHit.transform.gameObject.tag == "GumballMachine")
+            else if (hit && raycastHit.transform.name == "GumballPuzzle")
             {
+                Debug.Log("hit gumball machine");
                 AudioManager.instance.PlaySFX("coin-dispensing");
-                //AudioSource.PlayClipAtPoint(coinInDispenserSFX, Camera.main.transform.position);
                 GumballPuzzle gumballPuzzle = raycastHit.transform.gameObject.GetComponent<GumballPuzzle>();
                 gumballPuzzle.CompleteGumballPuzzle();
             }
             else if (hit && raycastHit.transform.gameObject.tag == "Book")
             {
                 Debug.Log("hit book");
+                AudioManager.instance.PlaySFX("book-pushed");
                 BookshelfPuzzle bookshelfPuzzle = GameObject.Find("BookshelfManager").GetComponent<BookshelfPuzzle>();
                 bookshelfPuzzle.IncrementBooksCollected(raycastHit.transform.gameObject);
             }

@@ -11,8 +11,7 @@ public class GumballMachineKey : MonoBehaviour, ICollectible
 
     public void Collect()
     {
-        AudioManager.instance.PlaySFX("collecting-coin");
-        //AudioSource.PlayClipAtPoint(collectCoinSFX, Camera.main.transform.position);
+        AudioManager.instance.PlaySFX("collecting-key");
 
         Debug.Log("Gumball machine key collected");
         Destroy(gameObject);

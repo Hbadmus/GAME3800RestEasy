@@ -36,6 +36,7 @@ public class AddToNotebook : MonoBehaviour
         if (!notebookController)
             return;
 
+        AudioManager.instance.PlaySFX("scribbling");
         notebookController.EnableHint(hintEnabledOnClick);
         added = true;
 

@@ -16,10 +16,12 @@ public class BriefcaseManager : MonoBehaviour
 
     void Update() {
         if (Input.GetKeyDown(KeyCode.I) && !isOpen) {
+            AudioManager.instance.PlaySFX("briefcase-open");
             briefcase.SetActive(true);
             isOpen = true;
         }
         else if (Input.GetKeyDown(KeyCode.I) && isOpen) {
+            AudioManager.instance.PlaySFX("briefcase-close");
             briefcase.SetActive(false);
             isOpen = false;
         }

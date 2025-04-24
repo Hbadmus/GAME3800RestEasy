@@ -11,7 +11,7 @@ public class PianoKey : MonoBehaviour, ICollectible
 
     public void Collect()
     {
-        AudioManager.instance.PlaySFX("collecting-coin");
+        AudioManager.instance.PlaySFX("collecting-key");
         //AudioSource.PlayClipAtPoint(collectCoinSFX, Camera.main.transform.position);
 
         Debug.Log("Piano key collected");

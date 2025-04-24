@@ -45,6 +45,7 @@ public class ClockPuzzle : MonoBehaviour
     public void SectionClicked(int section)
     {
         timeSinceLastClick = 5f;
+        AudioManager.instance.PlaySFX("clock-move-hand");
 
         RotateToNumber(section);
     }
