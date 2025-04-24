@@ -10,7 +10,7 @@ public class BriefcaseManager : MonoBehaviour
     public GameObject clockKey;
     public GameObject gumballMachineKey;
     public GameObject pianoKey;
-    public GameObject ballerina;
+    //public GameObject ballerina;
 
     private bool isOpen = false;
 
@@ -58,9 +58,10 @@ public class BriefcaseManager : MonoBehaviour
             if (inventory[i].itemData.displayName == "PianoKey") {
                 pianoKey.SetActive(true);
             }
-            if (inventory[i].itemData.displayName == "Ballerina") {
+            /*if (inventory[i].itemData.displayName == "Ballerina") {
+                Debug.Log("DFIJDNFJDKFNDKF");
                 ballerina.SetActive(true);
-            }
+            }*/
         }
     }
 
