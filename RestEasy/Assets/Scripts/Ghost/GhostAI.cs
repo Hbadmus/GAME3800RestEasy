@@ -51,6 +51,9 @@ public class GhostAI : MonoBehaviour
     [Header("Emotional Tags")]
     [SerializeField] private List<EmotionalTagData> emotionalTags = new List<EmotionalTagData>();
 
+    [Header("Sound Control")]
+    [SerializeField] private float minTimeBetweenSounds = 5f; // Minimum time between ghost sounds
+    [SerializeField] private float soundChance = 0.5f;
     private Transform player;
     private Light[] lightsInScene;
     private GhostState previousState;
@@ -63,6 +66,10 @@ public class GhostAI : MonoBehaviour
     private float disturbanceMultiplier = 1.0f;
     private List<GameObject> activeSparkleEffects = new List<GameObject>();
     public static GhostAI Instance { get; private set; }
+    private bool isActivated = false;
+    private float activationTimer = 20f;
+    private float timeSinceLastSound = 0f;
+    private bool inCutscene = false;
 
     public enum GhostState
     {
@@ -74,6 +81,7 @@ public class GhostAI : MonoBehaviour
 
     private void Awake()
     {
+        // Keep the singleton pattern
         if (Instance == null)
         {
             Instance = this;
@@ -84,6 +92,7 @@ public class GhostAI : MonoBehaviour
             return;
         }
 
+        // Initial setup but don't start behaviors yet
         player = GameObject.FindGameObjectWithTag("Player").transform;
 
         if (gameManager == null)
@@ -96,12 +105,11 @@ public class GhostAI : MonoBehaviour
         }
 
         lightsInScene = FindObjectsOfType<Light>();
-
         InitializeEmotionalTagValues();
 
-        SetGhostState(GhostState.Suspicious);
-
-        Debug.Log($"GhostAI found {lightsInScene.Length} lights in the scene");
+        // Set to inactive at start - we'll activate after the timer
+        isActivated = false;
+        Debug.Log("Ghost AI will activate in 20 seconds...");
     }
 
     private void InitializeEmotionalTagValues()
@@ -127,6 +135,27 @@ public class GhostAI : MonoBehaviour
 
     private void Update()
     {
+        // Check if we're in a cutscene - don't run ghost behaviors
+        if (inCutscene)
+            return;
+
+        // Update sound timer
+        timeSinceLastSound += Time.deltaTime;
+
+        // Check if we need to activate the ghost
+        if (!isActivated)
+        {
+            activationTimer -= Time.deltaTime;
+            if (activationTimer <= 0f)
+            {
+                isActivated = true;
+                SetGhostState(GhostState.Suspicious);
+                Debug.Log("Ghost AI has been activated!");
+            }
+            return; // Skip the rest of the update until activated
+        }
+
+        // Regular update code - only runs after activation
         timeSinceLastActivity += Time.deltaTime;
 
         stateChangeTimer -= Time.deltaTime;
@@ -266,7 +295,7 @@ public class GhostAI : MonoBehaviour
         }
     }
 
-    private IEnumerator PossessionSequence()
+private IEnumerator PossessionSequence()
     {
         isPossessingPlayer = true;
 
@@ -276,10 +305,19 @@ public class GhostAI : MonoBehaviour
             playerController.BecomePossessed();
         }
 
-        if (ghostAudioSource != null && heartbeatSound != null)
+        // Play heartbeat sound when getting possessed
+        AudioManager.instance.PlaySFX("heartbeat");
+
+        yield return new WaitForSeconds(2.5f);
+
+        // Hide cursor for cutscene
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        // Stop any sounds
+        if (ghostAudioSource != null)
         {
-            ghostAudioSource.PlayOneShot(heartbeatSound);
-            yield return new WaitForSeconds(2.5f);
+            ghostAudioSource.Stop();
         }
 
         gameManager.OnPuzzleCompleted();
@@ -459,10 +497,10 @@ public class GhostAI : MonoBehaviour
 
         rb.AddForce(forceDirection * force, ForceMode.Impulse);
 
-        if (ghostAudioSource != null && objectMovementSounds.Length > 0)
+        // Play object movement sound if not in cutscene and sound timers allow
+        if (!inCutscene && ShouldPlaySound())
         {
-            AudioClip clip = objectMovementSounds[Random.Range(0, objectMovementSounds.Length)];
-            ghostAudioSource.PlayOneShot(clip, Mathf.Min(1.0f, rb.mass / 10f));
+            AudioManager.instance.PlaySFX("object-movement");
         }
     }
 
@@ -520,25 +558,6 @@ public class GhostAI : MonoBehaviour
 
         // Immediately trigger the cutscene
         gameManager.OnPuzzleCompleted();
-    }
-
-    public void ProcessCutsceneComplete()
-    {
-
-        // End possession
-        EndPossession();
-
-        // Determine next state based on progression
-        if (storyProgressionStage >= 3)
-        {
-            // If all major puzzles are completed, become accepting
-            SetGhostState(GhostState.Accepting);
-        }
-        else
-        {
-            // Otherwise, return to suspicious state
-            SetGhostState(GhostState.Suspicious);
-        }
     }
 
     private void FlickerNearbyLight(bool intense)
@@ -793,10 +812,9 @@ public class GhostAI : MonoBehaviour
 
     private IEnumerator CreateWindEffect(float duration, bool intense)
     {
-        // Play wind sound
-        if (ghostAudioSource != null && windSound != null)
+        if (!inCutscene && ShouldPlaySound())
         {
-            ghostAudioSource.PlayOneShot(windSound, intense ? windIntensity : windIntensity * 0.7f);
+            AudioManager.instance.PlaySFX("wind");
         }
 
         // Find objects near the player
@@ -821,6 +839,28 @@ public class GhostAI : MonoBehaviour
         Debug.Log("Ghost created a wind effect around player");
     }
 
+    public void ProcessCutsceneComplete()
+    {
+        // End possession
+        EndPossession();
+
+        // Return cursor to previous state (if you want it locked but visible)
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = true;
+
+        // Determine next state based on progression
+        if (storyProgressionStage >= 3)
+        {
+            // If all major puzzles are completed, become accepting
+            SetGhostState(GhostState.Accepting);
+        }
+        else
+        {
+            // Otherwise, return to suspicious state
+            SetGhostState(GhostState.Suspicious);
+        }
+    }
+
     private void EndPossession()
     {
         isPossessingPlayer = false;
@@ -832,12 +872,15 @@ public class GhostAI : MonoBehaviour
             playerController.EndPossession();
         }
 
+        // Return cursor to previous state
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = true;
+
         // Return to suspicious state
         SetGhostState(GhostState.Suspicious);
 
         Debug.Log("Ghost has ended possession of the player");
     }
-
     private void PerformRandomGhostActivity()
     {
         // Choose a random activity based on current state
@@ -872,6 +915,21 @@ public class GhostAI : MonoBehaviour
                     CreateSubtlePresence();
                 break;
         }
+    }
+
+    private bool ShouldPlaySound()
+    {
+        // Check if enough time has passed since the last sound
+        if (timeSinceLastSound < minTimeBetweenSounds)
+            return false;
+
+        // Use soundChance to determine if sound should play
+        if (Random.value > soundChance)
+            return false;
+
+        // Reset the sound timer when we decide to play a sound
+        timeSinceLastSound = 0f;
+        return true;
     }
 
     private void PlayRandomStateSound()
