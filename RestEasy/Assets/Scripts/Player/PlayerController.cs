@@ -6,7 +6,10 @@ public class PlayerController : MonoBehaviour
 {
     public float speed = 10f;
     public float gravity = 9.81f;
-    public float mouseSensitivity = 2f;
+    public float mouseSensitivity = 20f;
+    public float minZoom = 30f;
+    public float maxZoom = 60f;
+    public float zoomSpeed = 2f;
 
     public Transform cameraTransform; // First-person camera reference
     private CharacterController controller;
@@ -23,10 +26,10 @@ public class PlayerController : MonoBehaviour
         controller = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
 
-        //Cursor.lockState = CursorLockMode.Locked;
+        Cursor.lockState = CursorLockMode.Locked;
 
-        //normalSpeed = speed;
-        //normalSensitivity = mouseSensitivity;
+        normalSpeed = speed;
+        normalSensitivity = mouseSensitivity;
     }
 
     void Update()
@@ -35,8 +38,9 @@ public class PlayerController : MonoBehaviour
         {
             HandleMovement();
             HandleMouseLook();
+            HandleCursorLock();
+            HandleZoom();
         }
-
     }
 
     public void BecomePossessed()
@@ -58,7 +62,7 @@ public class PlayerController : MonoBehaviour
         mouseSensitivity = normalSensitivity;
     }
 
-        void HandleMovement()
+    void HandleMovement()
     {
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
@@ -87,7 +91,7 @@ public class PlayerController : MonoBehaviour
     }
 
     void HandleMouseLook()
-    {        
+    {
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
 
@@ -98,5 +102,27 @@ public class PlayerController : MonoBehaviour
         verticalRotation -= mouseY;
         verticalRotation = Mathf.Clamp(verticalRotation, -90f, 90f);
         cameraTransform.localRotation = Quaternion.Euler(verticalRotation, 0f, 0f);
+    }
+
+    void HandleCursorLock()
+    {
+        if (Time.timeScale == 0)
+            return;
+
+        if (Input.GetMouseButtonDown(0))
+            Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    void HandleZoom()
+    {
+        if (Time.timeScale == 0)
+            return;
+
+        float scroll = Input.GetAxis("Mouse ScrollWheel");
+        if (scroll != 0f)
+        {
+            Camera.main.fieldOfView -= scroll * zoomSpeed;
+            Camera.main.fieldOfView = Mathf.Clamp(Camera.main.fieldOfView, minZoom, maxZoom);
+        }
     }
 }
