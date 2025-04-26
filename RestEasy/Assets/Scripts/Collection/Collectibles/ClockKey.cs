@@ -14,6 +14,7 @@ public class ClockKey : MonoBehaviour, ICollectible
         AudioManager.instance.PlaySFX("collecting-key");
 
         Debug.Log("Clock key collected");
+        
         Destroy(gameObject);
         OnClockKeyCollected?.Invoke(clockKeyData); // in other scripts, can subscribe and unsubscribe to invoke different methods
     }

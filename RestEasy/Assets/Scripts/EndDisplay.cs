@@ -13,6 +13,8 @@ public class EndDisplay : MonoBehaviour
     [Header("UI References")]
     [SerializeField] private Image blackScreen;
     [SerializeField] private TextMeshProUGUI narrativeText;
+    public GameObject endMessage;
+    public GameObject restartButton;
 
     [Header("Settings")]
     [SerializeField] private bool useClickProgression = true;
@@ -21,10 +23,6 @@ public class EndDisplay : MonoBehaviour
 
     [Header("Narrative Elements")]
     [SerializeField] private string[] narrativeElements;
-
-    [Header("Menu")]
-    public TextMeshProUGUI endMessage;
-    public Button restartButton;
 
     private int currentElementIndex = 0;
     private bool isDisplaying = false;
@@ -67,11 +65,11 @@ public class EndDisplay : MonoBehaviour
         //THIS IS THE SKIP FUNCTION I (chris) ADDED
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Debug.Log("I am supposed to be skipping");
+            // Debug.Log("I am supposed to be skipping");
             // make cursor not invisible 
-            canvas.SetActive(true);
-            EndNarrative();
-            return;
+            // canvas.SetActive(true);
+            // EndNarrative();
+            // return;
         }
         
         if (useClickProgression && Input.GetMouseButtonDown(0))
@@ -87,8 +85,8 @@ public class EndDisplay : MonoBehaviour
     {
         if (currentElementIndex >= narrativeElements.Length)
         {
-            endMessage.enabled = true;
-            restartButton.enabled = true;
+            endMessage.SetActive(true);
+            restartButton.SetActive(true);
             return;
         }
 
