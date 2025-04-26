@@ -5,7 +5,7 @@ using UnityEngine;
 public class BallerinaBehavior : MonoBehaviour
 {
     Animator animator;
-    bool isPlaying;
+    public bool isPlaying;
     void Start()
     {
         animator = GetComponent<Animator>();

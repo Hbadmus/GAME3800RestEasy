@@ -12,10 +12,8 @@ public class Ballerina : MonoBehaviour, ICollectible
     public void Collect()
     {
         AudioManager.instance.PlaySFX("collecting-coin");
-        //AudioSource.PlayClipAtPoint(collectCoinSFX, Camera.main.transform.position);
 
         Debug.Log("Ballerina collected");
-        Destroy(gameObject);
         OnBallerinaCollected?.Invoke(ballerinaData); // in other scripts, can subscribe and unsubscribe to invoke different methods
     }
 }

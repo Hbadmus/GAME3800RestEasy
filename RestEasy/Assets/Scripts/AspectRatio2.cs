@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class AspectRatio2 : MonoBehaviour
 {
     public GameObject parent;
+    public bool changeScale = false;
     public float xRatio = 1;
     public float yRatio = 1;
     public float xPosRatio = 1;
@@ -15,7 +16,17 @@ public class AspectRatio2 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ChangeSize();
+        if (changeScale) ChangeScale();
+        else ChangeSize();
+    }
+
+    public void ChangeScale() {
+        RectTransform parentTransform = (RectTransform)parent.transform;
+        RectTransform thisTransform = (RectTransform)transform;
+
+        float scaleY = parentTransform.sizeDelta.y / thisTransform.sizeDelta.y;
+
+        thisTransform.localScale = new Vector3(thisTransform.localScale.x * scaleY, thisTransform.localScale.y * scaleY, 1);
     }
 
     public void ChangeSize() {
