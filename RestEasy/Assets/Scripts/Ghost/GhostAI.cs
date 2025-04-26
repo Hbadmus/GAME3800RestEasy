@@ -350,8 +350,7 @@ private IEnumerator PossessionSequence()
         foreach (Collider col in nearbyObjects)
         {
             // Check for tags that indicate interactable objects
-            if (col.CompareTag("Interactable") || col.CompareTag("Key") ||
-                col.CompareTag("Clue") || col.CompareTag("EmotionalObject"))
+            if (col.CompareTag("Collectible") || col.CompareTag("EmotionalObject"))
             {
                 interactableObjects.Add(col.gameObject);
             }

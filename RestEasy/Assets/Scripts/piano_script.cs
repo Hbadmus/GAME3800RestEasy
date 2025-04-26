@@ -33,15 +33,9 @@ public class piano_script : MonoBehaviour
     void Start()
     {
         ks = FindObjectOfType<keyScript>();
-        
+
 
         keySequence = new GameObject[] { key2, key3, key4, key1 };
-
-        // Color the keys for testing purposes (you can remove this later)
-        key1.GetComponent<Renderer>().material.color = Color.yellow;
-        key2.GetComponent<Renderer>().material.color = Color.yellow;
-        key3.GetComponent<Renderer>().material.color = Color.yellow;
-        key4.GetComponent<Renderer>().material.color = Color.yellow;
     }
 
     void Update()

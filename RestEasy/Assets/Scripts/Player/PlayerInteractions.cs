@@ -58,14 +58,6 @@ public class PlayerInteractions : MonoBehaviour
             // Handle specific object interactions based on tags
             switch (hitObject.tag)
             {
-                case "Collectible":
-                    // Collect collectible items
-                    ICollectible collectible = hitObject.GetComponentInChildren<ICollectible>();
-                    if (collectible != null)
-                    {
-                        collectible.Collect();
-                    }
-                    break;
 
                 case "GumballMachine":
                     // Interact with gumball machine
