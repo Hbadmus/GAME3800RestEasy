@@ -31,9 +31,9 @@ public class ExamineManager : MonoBehaviour
     {
         mainCamera = Camera.main;
         examineCamera = GameObject.FindWithTag("ExamineCamera").GetComponent<Camera>();
+
         if (examineCamera)
             examineCameraOriginalPos = examineCamera.transform.position;
-
         if (!examineCamera)
             Debug.LogWarning("ExamineManager could not find the examine camera -- make sure examine camera is tagged 'ExamineCamera'");
         if (examinableObjects.Length == 0)
