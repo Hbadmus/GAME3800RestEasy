@@ -15,12 +15,12 @@ public class KeyInteraction : MonoBehaviour
         gameManager = manager;
     }
 
-    /*private void OnMouseDown()
+    private void OnMouseDown()
     {
         if (!isCollected && gameManager != null)
         {
             isCollected = true;
             gameManager.CollectKey(keyIndex);
         }
-    }*/
+    }
 }

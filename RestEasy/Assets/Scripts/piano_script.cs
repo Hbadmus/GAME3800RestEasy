@@ -61,19 +61,19 @@ public class piano_script : MonoBehaviour
     void piano_key_pressed(GameObject key)
     {
         Debug.Log(key.name);
-        if (key.name == "Cube.021") {
+        if (key.name == "PuzzleKey1") {
             AudioManager.instance.PlaySFX("c6");
             //AudioSource.PlayClipAtPoint(keyPressedSFX[0], Camera.main.transform.position);
         }
-        else if (key.name == "Cube.026") {
+        else if (key.name == "PuzzleKey2") {
             AudioManager.instance.PlaySFX("e6");
             //AudioSource.PlayClipAtPoint(keyPressedSFX[1], Camera.main.transform.position);
         }
-        else if (key.name == "Cube.027") {
+        else if (key.name == "PuzzleKey3") {
             AudioManager.instance.PlaySFX("f6");
             //AudioSource.PlayClipAtPoint(keyPressedSFX[2], Camera.main.transform.position);
         }
-        else if (key.name == "Cube.028") {
+        else if (key.name == "PuzzleKey4") {
             AudioManager.instance.PlaySFX("g6");
             //AudioSource.PlayClipAtPoint(keyPressedSFX[3], Camera.main.transform.position);
         }

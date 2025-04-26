@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ImportantDoor : MonoBehaviour
 {
-    /*
+
     [SerializeField] private GameManager gameManager;
     [SerializeField] private Animator doorAnimator;
 
@@ -24,19 +24,21 @@ public class ImportantDoor : MonoBehaviour
     private void OnMouseDown()
     {
         // Check if all keys are collected
+        if (gameManager.AreAllKeysCollected())
+        {
 
             // Trigger door animation
             if (doorAnimator != null)
             {
                 doorAnimator.SetTrigger("openDoor");
 
-                // Notify GameManager that the door has been opened
-                gameManager.OnFinalDoorOpened();
+
             }
             else
             {
                 Debug.LogError("Door animator not found on " + gameObject.name);
             }
+        }
     }
-    */
+    
 }

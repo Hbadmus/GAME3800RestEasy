@@ -67,7 +67,7 @@ public class GhostAI : MonoBehaviour
     private List<GameObject> activeSparkleEffects = new List<GameObject>();
     public static GhostAI Instance { get; private set; }
     private bool isActivated = false;
-    private float activationTimer = 20f;
+    private float activationTimer = 180f;
     private float timeSinceLastSound = 0f;
     private bool inCutscene = false;
 

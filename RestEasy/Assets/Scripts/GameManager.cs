@@ -420,103 +420,21 @@ public class GameManager : MonoBehaviour
             Debug.Log($"Key {keyIndex} collected!");
             keyCollectedStatus[keyIndex] = true;
 
-            // Hide the key
-            if (doorKeys[keyIndex] != null)
-            {
-                doorKeys[keyIndex].SetActive(false);
-            }
-
             ghostAI.OnKeyCollected();
 
             // Call OnPuzzleCompleted to progress the game
             OnPuzzleCompleted();
         }
     }
-/*
-    public bool AreAllKeysCollected()
-    {
-        // Check all entries in keyCollectedStatus array
-        foreach (bool status in keyCollectedStatus)
+
+        public bool AreAllKeysCollected()
         {
-            if (!status) return false; // If any key is not collected, return false
-        }
-        return true; // All keys are collected
-    }
-
-    public void OnFinalDoorOpened()
-    {
-        Debug.Log("Final door opened! Waiting before starting ending sequence...");
-
-        // Wait 3 seconds and then start the final sequence
-        if (!isTransitioning)
-        {
-            StartCoroutine(DelayedFinalSequence());
-        }
-    }
-
-    // New coroutine that delays before starting the sequence
-    private IEnumerator DelayedFinalSequence()
-    {
-        // First wait 3 seconds while gameplay continues
-        yield return new WaitForSeconds(3f);
-
-        // Now start the transition sequence
-        isTransitioning = true;
-
-        // Hide cursor for the rest of the game
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-
-        // Fade to black - this should stay black permanently
-        yield return StartCoroutine(FadeToBlack(true));
-
-        // Find the EndingNarrative if we haven't already
-        EndingNarrative endingNarrative = FindObjectOfType<EndingNarrative>();
-
-        if (endingNarrative != null)
-        {
-            Debug.Log("Starting ending narrative sequence");
-            // Start the ending narrative while keeping screen black
-            endingNarrative.StartNarrative();
-
-            // IMPORTANT: We don't quit here. The narrative script will call
-            // OnEndingNarrativeComplete when the user has clicked through everything
-        }
-        else
-        {
-            Debug.LogError("EndingNarrative component not found in the scene!");
-            // Only quit immediately if we can't find the narrative component
-            StartCoroutine(QuitGameAfterDelay(2f));
+            // Check all entries in keyCollectedStatus array
+            foreach (bool status in keyCollectedStatus)
+            {
+                if (!status) return false; // If any key is not collected, return false
+            }
+            return true; // All keys are collected
         }
 
-        isTransitioning = false;
-    }
-
-    // Method to handle completion of the ending narrative
-    public void OnEndingNarrativeComplete()
-    {
-        Debug.Log("Ending narrative sequence complete - Quitting game");
-
-        // Wait a moment before quitting, keeping screen black
-        StartCoroutine(QuitGameAfterDelay(2f));
-    }
-
-    private IEnumerator QuitGameAfterDelay(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-
-        // Show a "Thanks for playing" message if you want
-        Debug.Log("Thanks for playing!");
-
-        // Quit the game
-#if UNITY_EDITOR
-        // If in the Unity editor
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
-        // If in a built game
-        Application.Quit();
-#endif
-    }
-
-    */
 }
