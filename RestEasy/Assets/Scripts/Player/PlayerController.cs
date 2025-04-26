@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     public float minZoom = 30f;
     public float maxZoom = 60f;
     public float zoomSpeed = 2f;
+    public static bool Walking {get; private set;} 
 
     public Transform cameraTransform; // First-person camera reference
     private CharacterController controller;
@@ -30,6 +31,8 @@ public class PlayerController : MonoBehaviour
 
         normalSpeed = speed;
         normalSensitivity = mouseSensitivity;
+
+        Walking = false;
     }
 
     void Update()
@@ -64,8 +67,18 @@ public class PlayerController : MonoBehaviour
 
     void HandleMovement()
     {
+        if (Time.timeScale == 0)
+            return;
+        
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
+
+        if (moveHorizontal != 0f || moveVertical != 0f)
+        {
+            Walking = true;
+        }
+        else 
+            Walking = false;
 
         Vector3 forwardMovement = transform.forward * moveVertical;
         Vector3 rightMovement = transform.right * moveHorizontal;
@@ -92,6 +105,9 @@ public class PlayerController : MonoBehaviour
 
     void HandleMouseLook()
     {
+        if (Time.timeScale == 0)
+            return;
+        
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
 

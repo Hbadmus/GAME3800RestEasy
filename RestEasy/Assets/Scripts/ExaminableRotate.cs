@@ -6,8 +6,8 @@ public class ExaminableRotate : MonoBehaviour
 {
     public float rotationSpeed = 5f;
     public float zoomSpeed = 2f;
-    public float minZoom = 1f;
-    public float maxZoom = 10f;
+    public float maxCameraPos = -10f;
+    public float minCameraPos = -40f;
 
     bool dragging = false;
     float currentZoom;
@@ -16,7 +16,6 @@ public class ExaminableRotate : MonoBehaviour
     void Start()
     {
         examineCamera = GameObject.FindWithTag("ExamineCamera").GetComponent<Camera>();
-
     }
 
     void Update()
@@ -39,11 +38,21 @@ public class ExaminableRotate : MonoBehaviour
         float scroll = Input.GetAxis("Mouse ScrollWheel");
         if (Mathf.Abs(scroll) > 0.01f)
         {
-            currentZoom -= scroll * zoomSpeed;
-            currentZoom = Mathf.Clamp(currentZoom, minZoom, maxZoom);
+            currentZoom -= scroll * zoomSpeed / 10f;
 
-            Vector3 direction = (examineCamera.transform.position - transform.position).normalized;
-            examineCamera.transform.position = transform.position + direction * currentZoom;
+            // Vector3 direction = (examineCamera.transform.position - transform.position).normalized;
+            if (scroll > 0)
+            {
+                Vector3 newCameraPos = examineCamera.transform.position - Vector3.forward * currentZoom;
+                newCameraPos.z = Mathf.Clamp(newCameraPos.z, minCameraPos, maxCameraPos);
+                examineCamera.transform.position = newCameraPos;
+            }
+            else
+            {
+                Vector3 newCameraPos = examineCamera.transform.position + Vector3.forward * currentZoom;
+                newCameraPos.z = Mathf.Clamp(newCameraPos.z, minCameraPos, maxCameraPos);
+                examineCamera.transform.position = newCameraPos;
+            }
         }
     }
 }

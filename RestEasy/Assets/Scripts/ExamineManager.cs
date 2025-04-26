@@ -5,12 +5,15 @@ using UnityEngine;
 public class ExamineManager : MonoBehaviour
 {
     public Transform examinablePivot;
-    public float displayPadding = 1.2f;
+    public GameObject[] examinableObjects;
     public static ExamineManager Instance;
 
     Camera mainCamera;
     Camera examineCamera;
-    GameObject examinableObject;
+    Vector3 examineCameraOriginalPos;
+    GameObject objectBeingExamined;
+    Transform objectBeingExaminedOriginalTransform;
+    bool examining;
 
     void Awake() {
         if (Instance == null) 
@@ -28,24 +31,31 @@ public class ExamineManager : MonoBehaviour
     {
         mainCamera = Camera.main;
         examineCamera = GameObject.FindWithTag("ExamineCamera").GetComponent<Camera>();
+        if (examineCamera)
+            examineCameraOriginalPos = examineCamera.transform.position;
 
         if (!examineCamera)
             Debug.LogWarning("ExamineManager could not find the examine camera -- make sure examine camera is tagged 'ExamineCamera'");
+        if (examinableObjects.Length == 0)
+            Debug.LogWarning("No examinable objects added to the ExamineManager");
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetMouseButtonDown(1) && examining)
+        {
             Instance.ExitExamine();
+        }
     }
 
-    public void ExamineObject(GameObject obj)
+    public void ExamineObject(int objectIdx)
     {
-        examinableObject = Instantiate(obj, transform.position, transform.rotation, examinablePivot);
-        Destroy(examinableObject.GetComponent<ExaminableObject>());
+        examining = true;
+        AudioManager.instance.ToggleSFX();
 
-        examinableObject.layer = 3;
-        // FrameExaminableObject();
+        objectBeingExamined = examinableObjects[objectIdx];
+        objectBeingExaminedOriginalTransform = objectBeingExamined.transform;
+        objectBeingExamined.SetActive(true);
 
         examineCamera.enabled = true;
         mainCamera.enabled = false;
@@ -54,16 +64,22 @@ public class ExamineManager : MonoBehaviour
 
     void ExitExamine()
     {
-        Destroy(examinableObject);
-        examinableObject = null;
-        examinablePivot.transform.localRotation = Quaternion.identity;
+        examining = false;
+        AudioManager.instance.ToggleSFX();
+
+        objectBeingExamined.transform.position = objectBeingExaminedOriginalTransform.position;
+        objectBeingExamined.transform.rotation = objectBeingExaminedOriginalTransform.rotation;        
+        objectBeingExamined.SetActive(false);
+        objectBeingExamined = null;
+
+        examineCamera.transform.position = examineCameraOriginalPos;
 
         mainCamera.enabled = true;
         examineCamera.enabled = false;
         Time.timeScale = 1;
     }
 
-    // this does not work 
+    /*
     void FrameExaminableObject()
     {
         if (!examinableObject)
@@ -108,4 +124,5 @@ public class ExamineManager : MonoBehaviour
 
         return combinedBounds;
     }
+    */
 }

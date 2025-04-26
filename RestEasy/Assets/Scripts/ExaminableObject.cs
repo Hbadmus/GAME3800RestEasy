@@ -6,22 +6,31 @@ using UnityEngine;
 [RequireComponent(typeof(Collider))]
 public class ExaminableObject : MonoBehaviour
 {
-    public GameObject examinablePrefab;
+    public int examinableObjectIndex = 99;
+    public bool firstClickAddsToNotebook;
+
+    bool addedToNotebook;
 
     void Start()
     {
-        if (!examinablePrefab)
-            this.examinablePrefab = gameObject;
-        if (!examinablePrefab)
-            Debug.LogWarning("Assign a prefab to ExaminableObject script on " + transform.name);
+        if (examinableObjectIndex == 99)
+            Debug.Log("Assign an index to all examinable objects");
     }
 
     void OnMouseDown()
     {
-        if (ExamineManager.Instance)
-            ExamineManager.Instance.ExamineObject(examinablePrefab);
-        
+        if (firstClickAddsToNotebook)
+        {
+            if (!addedToNotebook)
+            {
+                addedToNotebook = true;
+                return;
+            }
+        }
+
+        if (ExamineManager.Instance && examinableObjectIndex != 99)
+            ExamineManager.Instance.ExamineObject(examinableObjectIndex);
         else
-            Debug.LogWarning("ExaminableObject script failed -- cannot find ExamineManager in the scene");
+            Debug.LogWarning("ExaminableObject script failed");
     }
 }

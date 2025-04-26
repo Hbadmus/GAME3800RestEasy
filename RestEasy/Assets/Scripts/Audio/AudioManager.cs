@@ -8,6 +8,9 @@ public class AudioManager : MonoBehaviour
     public static AudioManager instance;
     public Sound[] musicSounds, sfxSounds;
     public AudioSource musicSource, sfxSource;
+    public AudioSource walkingSFXSource;
+
+    bool playingWalk;
 
     private void Awake() {
         if (instance == null) 
@@ -21,9 +24,15 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    /*private void Start() {
-        PlayMusic("MainTheme");
-    }*/
+    private void Start() {
+        // PlayMusic("MainTheme");
+        playingWalk = false;
+    }
+
+    void Update()
+    {
+        HandleWalkSFX();
+    }
 
     public float GetLengthOfMusicClip(string name) {
         Sound s = Array.Find(musicSounds, sound => sound.name == name);
@@ -81,6 +90,7 @@ public class AudioManager : MonoBehaviour
 
     public void ToggleSFX() {
         sfxSource.mute = !sfxSource.mute;
+        walkingSFXSource.mute = !walkingSFXSource.mute;
     }
 
     public void SetMusicVolume(float volume) {
@@ -89,5 +99,25 @@ public class AudioManager : MonoBehaviour
 
     public void SetSFXVolume(float volume) {
         sfxSource.volume = volume;
+    }
+
+    void HandleWalkSFX()
+    {
+        if (PlayerController.Walking)
+        {
+            if (!playingWalk)
+            {
+                playingWalk = true;
+                walkingSFXSource.Play();
+            }
+        }
+        else
+        {
+            if (playingWalk)
+            {
+                playingWalk = false;
+                walkingSFXSource.Stop();
+            }
+        }
     }
 }

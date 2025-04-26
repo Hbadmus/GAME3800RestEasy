@@ -25,20 +25,23 @@ public class MouseClick : MonoBehaviour
             RaycastHit raycastHit;
 
             bool hit = Physics.Raycast(ray, out raycastHit);
+            // Added this if (!hit) conditon because of NullReferenceExceptions (Marcella)
+            if (!hit)
+                return;
 
             Debug.Log(raycastHit.transform.name);
             if (hit && raycastHit.transform.gameObject.tag == "Collectible") 
             {
                 raycastHit.transform.gameObject.GetComponentInChildren<ICollectible>().Collect();
             }
-            else if (hit && raycastHit.transform.name == "GumballPuzzle")
+            else if (raycastHit.transform.name == "GumballPuzzle")
             {
                 Debug.Log("hit gumball machine");
                 AudioManager.instance.PlaySFX("coin-dispensing");
                 GumballPuzzle gumballPuzzle = raycastHit.transform.gameObject.GetComponent<GumballPuzzle>();
                 gumballPuzzle.CompleteGumballPuzzle();
             }
-            else if (hit && raycastHit.transform.gameObject.tag == "Book")
+            else if (raycastHit.transform.gameObject.tag == "Book")
             {
                 Debug.Log("hit book");
                 AudioManager.instance.PlaySFX("book-pushed");
