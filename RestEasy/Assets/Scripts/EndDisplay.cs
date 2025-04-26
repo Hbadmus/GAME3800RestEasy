@@ -27,6 +27,8 @@ public class EndDisplay : MonoBehaviour
     private int currentElementIndex = 0;
     private bool isDisplaying = false;
     private CanvasGroup textCanvasGroup;
+    private bool waitingForClick = false;
+    private bool cutsceneOver = false;
 
     public void StartNarrative()
     {
@@ -62,6 +64,9 @@ public class EndDisplay : MonoBehaviour
 
     private void Update()
     {
+        if (cutsceneOver)
+            return;
+
         //THIS IS THE SKIP FUNCTION I (chris) ADDED
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -70,6 +75,14 @@ public class EndDisplay : MonoBehaviour
             // canvas.SetActive(true);
             // EndNarrative();
             // return;
+        }
+
+        if (useClickProgression && Input.GetMouseButtonDown(0))
+        {
+            if (!isDisplaying && !waitingForClick)
+            {
+                DisplayNextElement();
+            }
         }
         
         if (useClickProgression && Input.GetMouseButtonDown(0))
@@ -81,23 +94,29 @@ public class EndDisplay : MonoBehaviour
         }
     }
 
+    
     private void DisplayNextElement()
     {
         if (currentElementIndex >= narrativeElements.Length)
         {
             endMessage.SetActive(true);
             restartButton.SetActive(true);
+            narrativeText.SetText("");
+            cutsceneOver = true;
+
             return;
         }
 
         StartCoroutine(FadeInText(narrativeElements[currentElementIndex]));
         currentElementIndex++;
 
+
         if (!useClickProgression)
         {
             StartCoroutine(AutoProgressCoroutine());
         }
     }
+    
 
     private IEnumerator FadeInText(string text)
     {

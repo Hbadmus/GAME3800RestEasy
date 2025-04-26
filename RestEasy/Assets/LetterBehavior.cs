@@ -23,7 +23,7 @@ public class LetterBehavior : MonoBehaviour
         if (clicked)
             return;
         
-        // Time.timeScale = 0f;
+        Time.timeScale = 0.3f;
         AudioManager.instance.ToggleSFX();
         
         finalCutscene.SetActive(true);
